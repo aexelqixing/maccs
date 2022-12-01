@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const Forms = sequelize.define("Forms", {
+        student: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         proposalName: {
             type: DataTypes.STRING,
             allowNull: false
@@ -8,9 +12,33 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        user: {
+        isOnline: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        streetAddress: {
             type: DataTypes.STRING,
-            allowNull: false
+        },
+        city: {
+            type: DataTypes.STRING,
+        },
+        state: {
+            type: DataTypes.STRING,
+        },
+        zipcode: {
+            type: DataTypes.STRING,
+        },
+        isHighNeeds: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
+        status: {
+            type: DataTypes.STRING,
+            defaultValue: "requested",
+        },
+        hours: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
         }
     })
 

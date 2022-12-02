@@ -1,22 +1,19 @@
 import './index.css';
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Form from './components/Form';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
+import Home from './pages/Home';
+import AddForm from './pages/AddForm';
 
 function App() {
-  const [listOfForms, setListOfForms] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/forms").then((response) => {
-      setListOfForms(response.data);
-    });
-  }, [])
-
+  
   return (
     <div className="container">
-      {listOfForms.map((value, key) => {
-        return <Form form={ value } />
-      })}
+      <Router>
+        <Link to="/addForm"> Add Form </Link>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/addForm" exact element={<AddForm />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

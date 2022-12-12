@@ -10,6 +10,8 @@ const db = require('./models')
 // Routers
 const formRouter = require('./routes/Forms');
 app.use("/forms", formRouter);
+const commentsRouter = require('./routes/Comments');
+app.use("/comments", commentsRouter);
 
 db.sequelize.sync().then( () => {
     app.listen(3001, () => {

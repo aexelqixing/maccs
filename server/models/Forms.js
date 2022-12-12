@@ -42,5 +42,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     })
 
+    Forms.associate = (models) => {
+        Forms.hasMany(models.Comments, {
+            onDelete: "cascade",
+        })
+    }
+
     return Forms
 }

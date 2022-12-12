@@ -3,10 +3,12 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 import Home from './pages/Home';
 import AddForm from './pages/AddForm';
 import SeeForm from './pages/SeeForm';
+import Footer from './components/Footer';
 
 function App() {
   
   return (
+    <>
     <div className="container">
       <Router>
         <div className="navbar">
@@ -20,6 +22,8 @@ function App() {
         </Routes>
       </Router>
     </div>
+    <Footer />
+    </>
   );
 }
 

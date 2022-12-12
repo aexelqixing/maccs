@@ -30,6 +30,12 @@ body {
   background-color: #40916c;
 }
 
+.footer {
+  background-color: #40916c;
+  text-align: center;
+  padding: 20px;
+}
+
 .btn {
   display: inline-block;
   background: #283618;

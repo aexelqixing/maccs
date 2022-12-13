@@ -17,7 +17,7 @@ const Home = () => {
     <>
       <Header />
       {listOfForms.map((value, key) => {
-        return <Form form={value} />;
+        return <Form key={key} form={value} />;
       })}
     </>
   );

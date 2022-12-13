@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        proposalDescription: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         businessName: {
             type: DataTypes.STRING,
             allowNull: false

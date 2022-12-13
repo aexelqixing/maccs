@@ -15,8 +15,8 @@ const Form = ({ form }) => {
                 onClick={() => setShowDescription(!showDescription)}
             />
         </h3>
-        <p>Start Date: {form.createdAt}</p>
-        <p>Updated On {form.updatedAt}</p>
+        <p>Start Date: {form.createdAt.substring(0,10)}</p>
+        <p>Updated On {form.updatedAt.substring(0,10)}</p>
         <p><span className="form form-creator">Student: {form.student}</span></p>
         {showDescription && <Description form={ form } />}
     </div>

@@ -96,6 +96,16 @@ body {
   justify-content: space-between;
 }
 
+.comment {
+  background: #60d394;
+  padding: 10px 10px;
+}
+
+.comment h3 {
+  align-items: center;
+  justify-content: space-between;
+}
+
 .description {
   background: #caf0f8;
   margin: 0;

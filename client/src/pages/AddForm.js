@@ -11,6 +11,7 @@ const AddForm = () => {
   const initialValues = {
     student: "",
     proposalName: "",
+    proposalDescription: "",
     businessName: "",
     streetAddress: "",
     city: "",
@@ -28,6 +29,7 @@ const AddForm = () => {
       .matches(/^[A-Za-z0-9]+@wpi\.edu$/, "It is not a WPI email (yet).")
       .required("You must input your WPI Email Address."),
     proposalName: Yup.string().required(),
+    proposalDescription: Yup.string().required(),
     businessName: Yup.string().required(),
     streetAddress: Yup.string(),
     city: Yup.string(),
@@ -70,6 +72,17 @@ const AddForm = () => {
             id="inputCreateForm"
             name="proposalName"
             placeholder="Doing Your STEM Project"
+          />
+          <label>Proposal Description: </label>
+          <ErrorMessage
+            name="proposalDescription"
+            component="span"
+            className="errorMessage"
+          />
+          <Field
+            id="inputCreateForm"
+            name="proposalDescription"
+            placeholder="Making my STEM poster which is quite obviously high needs. "
           />
           <label>Business Name: </label>
           <ErrorMessage

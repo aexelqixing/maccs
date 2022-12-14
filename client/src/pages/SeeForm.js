@@ -23,6 +23,12 @@ const SeeForm = () => {
     }, []);
 
     const addComment = () => {
+
+      if (!newComment) {
+        alert('Please add all the required information.')
+        return
+      }
+
       axios.post("http://localhost:3001/comments", {user: student, commentBody: newComment, FormId: id}).then((response) => {
         const commentToAdd = {user: student, commentBody: newComment}
         setComments([...comments, commentToAdd])

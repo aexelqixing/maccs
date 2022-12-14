@@ -6,6 +6,11 @@ const Login = () => {
     const [password, setPassword] = useState("");
 
     const login= () => {
+      if (!student || !password) {
+        alert('Please input your username and password. ')
+        return
+    }
+
         const data = { student: student, password: password }
         axios.post("http://localhost:3001/auth/login", data).then((response) => {
             console.log(response.data)

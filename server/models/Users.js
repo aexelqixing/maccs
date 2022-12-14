@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         gradYear: {
             type: DataTypes.STRING,
-            allowNull: false,
+            defaultValue: "0000"
         },
         student: {
             type: DataTypes.STRING,

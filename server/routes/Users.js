@@ -3,19 +3,26 @@ const router = express.Router();
 const { Users } = require('../models');
 const bcrypt = require("bcrypt");
 
+const {sign} = require('jsonwebtoken')
+
 router.post("/", async (req, res) => {
     const { firstName, lastName, gradYear, student, password, isAdmin } = req.body;
-    bcrypt.hash(password, 10).then((hash) => {
-        Users.create({
-            firstName: firstName,
-            lastName: lastName,
-            student: student,
-            gradYear: gradYear,
-            password: hash,
-            isAdmin: isAdmin
+
+    const user = await Users.findOne({ where: { student: student }});
+    if (!user) {
+        bcrypt.hash(password, 10).then((hash) => {
+            Users.create({
+                firstName: firstName,
+                lastName: lastName,
+                student: student,
+                gradYear: gradYear,
+                password: hash,
+                isAdmin: isAdmin
+            })
         })
-    })
-    res.json("successfully hashing");
+        res.json("successfully hashed.");
+    }
+    else res.json("User already exists.");
 });
 
 router.post('/login', async (req, res) => {
@@ -29,8 +36,9 @@ router.post('/login', async (req, res) => {
         bcrypt.compare(password, user.password).then((match) => {
             if (!match) res.json({error: "Wrong Username Or Password Combination. "});
             else {
-                if (user.isAdmin) res.json("You are an admin? Cool. You have also successfully logged in.");
-                else res.json("You have successfully logged in. ");
+                const accessToken = sign({student: user.student, id: user.id}, "importantsecret");
+
+                res.json(accessToken);
             }
         })
     }

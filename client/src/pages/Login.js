@@ -13,7 +13,11 @@ const Login = () => {
 
         const data = { student: student, password: password }
         axios.post("http://localhost:3001/auth/login", data).then((response) => {
-            console.log(response.data)
+          if (response.data.error) {
+            alert(response.data.error);
+            return;
+          }
+          sessionStorage.setItem("accessToken", response.data);
         })
     }
   return (

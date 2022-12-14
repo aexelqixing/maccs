@@ -26,11 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     })
 
-    Users.associate = (models) => {
-        Users.hasMany(models.Forms, {
-            onDelete: "cascase", 
-        });
-    }
+    // Users.associate = (models) => {
+    //     Users.hasMany(models.Forms, {
+    //         onDelete: "cascase", 
+    //     });
+    // }
 
     return Users;
 }

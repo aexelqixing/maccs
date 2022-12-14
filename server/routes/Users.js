@@ -25,11 +25,12 @@ router.post('/login', async (req, res) => {
 
     if (!user) res.json({error: "User doesn't exist. "});
 
-    bcrypt.compare(password, user.password).then((match) => {
-        if (!match) res.json({error: "Wrong Username Or Password Combination. "});
-
-        res.json("You have successfully logged in. ");
-    })
+    else {
+        bcrypt.compare(password, user.password).then((match) => {
+            if (!match) res.json({error: "Wrong Username Or Password Combination. "});
+            else res.json("You have successfully logged in. ");
+        })
+    }
 })
 
 module.exports = router;

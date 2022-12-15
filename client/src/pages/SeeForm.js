@@ -61,7 +61,7 @@ const SeeForm = () => {
     axios
       .put(`http://localhost:3001/forms/byId/${id}`, data, {
         headers: {
-          accessToken: sessionStorage.getItem("accessToken"),
+          accessToken: localStorage.getItem("accessToken"),
         },
       })
       .then((response) => {
@@ -86,7 +86,7 @@ const SeeForm = () => {
         },
         {
           headers: {
-            accessToken: sessionStorage.getItem("accessToken"),
+            accessToken: localStorage.getItem("accessToken"),
           },
         }
       )

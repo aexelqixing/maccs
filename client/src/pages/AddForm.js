@@ -34,7 +34,7 @@ const AddForm = () => {
     axios.post("http://localhost:3001/forms", data,
     {
       headers: {
-        accessToken: sessionStorage.getItem("accessToken"),
+        accessToken: localStorage.getItem("accessToken"),
       },
     }).then((response) => {
       navigate(`/home`);

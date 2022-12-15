@@ -15,7 +15,7 @@ function App() {
           <div className="navbar">
             <Link to="/home"> Home </Link>
             <Link to="/addForm"> Add Form </Link>
-            {!sessionStorage.getItem("accessToken") && (
+            {!localStorage.getItem("accessToken") && (
               <>
                 <Link to="/login"> Login </Link>
                 <Link to="/"> Registration </Link>

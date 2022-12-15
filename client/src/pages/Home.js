@@ -12,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     axios.get("http://localhost:3001/forms", {
       headers: {
-        accessToken: sessionStorage.getItem("accessToken"),
+        accessToken: localStorage.getItem("accessToken"),
       },
     }).then((response) => {
       if (response.data.error) {

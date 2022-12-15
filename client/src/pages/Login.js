@@ -19,7 +19,7 @@ const Login = () => {
             alert(response.data.error);
             return;
           }
-          sessionStorage.setItem("accessToken", response.data);
+          localStorage.setItem("accessToken", response.data);
           navigate(`/home`);
         })
     }

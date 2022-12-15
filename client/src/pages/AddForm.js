@@ -39,7 +39,7 @@ const AddForm = () => {
 
   const onSubmit = (data) => {
     axios.post("http://localhost:3001/forms", data).then((response) => {
-      navigate(`/`);
+      navigate(`/home`);
     });
   };
 

@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [student, setStudent] = useState("");
     const [password, setPassword] = useState("");
+    let navigate = useNavigate();
 
     const login= () => {
       if (!student || !password) {
@@ -18,6 +20,7 @@ const Login = () => {
             return;
           }
           sessionStorage.setItem("accessToken", response.data);
+          navigate(`/login`);
         })
     }
   return (

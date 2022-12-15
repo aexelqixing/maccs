@@ -29,8 +29,9 @@ router.put("/byId/:id", async (req, res) => {
     if (updated) {
         const updatedForm = await Forms.findByPk(id);
         res.json(updatedForm)
+    } else {
+        res.json(updated);
     }
-    res.json(updated);
 })
 
 module.exports = router

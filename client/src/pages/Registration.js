@@ -1,9 +1,11 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
 import axios from "axios";
 
 const Registration = () => {
+  let navigate = useNavigate();
     const initialValues = {
         firstName: "",
         lastName: "",
@@ -29,6 +31,7 @@ const Registration = () => {
         axios.post("http://localhost:3001/auth", data).then((response) => {
             console.log(data);
             console.log(response.data);
+            navigate(`/login`);
         })
       }
 

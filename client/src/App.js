@@ -14,18 +14,18 @@ function App() {
     <div>
       <Router>
         <div className="navbar">
-        <Link to="/"> Home </Link>
+        <Link to="/home"> Home </Link>
         <Link to="/addForm"> Add Form </Link>
         <Link to="/login"> Login </Link>
-        <Link to="/registration"> Registration </Link>
+        <Link to="/"> Registration </Link>
         </div>
         <div className="container">
         <Routes>
-          <Route path="/" exact element={<Home />} />
+          <Route path="/" exact element={<Registration />} />
           <Route path="/addForm" exact element={<AddForm />} />
           <Route path="/form/:id" exact element={<SeeForm />} />
           <Route path="/login" exact element={<Login />} />
-          <Route path="/registration" exact element={<Registration />} />
+          <Route path="/home" exact element={<Home />} />
         </Routes>
         </div>
       </Router>

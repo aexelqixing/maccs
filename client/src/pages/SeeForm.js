@@ -58,14 +58,16 @@ const SeeForm = () => {
   });
 
   const onSubmit = (data) => {
-    axios.put(`http://localhost:3001/forms/byId/${id}`, data, {
-      headers: {
-        accessToken: sessionStorage.getItem("accessToken"),
-      },
-    }).then((response) => {
-      console.log(response.data);
-      navigate(`/home`);
-    });
+    axios
+      .put(`http://localhost:3001/forms/byId/${id}`, data, {
+        headers: {
+          accessToken: sessionStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        navigate(`/home`);
+      });
   };
 
   const addComment = () => {
@@ -93,10 +95,10 @@ const SeeForm = () => {
           alert(response.data.error);
           return;
         }
-        const commentToAdd = { user: student, commentBody: newComment };
+        console.log(response);
+        const commentToAdd = response.data;
         setComments([...comments, commentToAdd]);
         setNewComment("");
-        window.location.reload(false);
       });
   };
 
@@ -104,8 +106,14 @@ const SeeForm = () => {
     <>
       <div className={`form ${form.isHighNeeds ? "highNeeds" : ""}`}>
         <h3>{form.proposalName} </h3>
-        <p>Start Date: {form.createdAt}  {form.createdAt}</p>
-        <p>Updated On {form.updatedAt}  {form.updatedAt}</p>
+        <p>
+          Start Date: {form.createdAt ? form.createdAt.substring(0, 10) : "..."}{" "}
+          {form.createdAt ? form.createdAt.substring(11, 19) : ""}
+        </p>
+        <p>
+          Updated On {form.updatedAt ? form.updatedAt.substring(0, 10) : "..."}{" "}
+          {form.updatedAt ? form.createdAt.substring(11, 19) : ""}
+        </p>
         <p>
           <span className="form form-creator">Student: {form.student}</span>
         </p>
@@ -126,68 +134,57 @@ const SeeForm = () => {
         </div>
         {editForm && (
           <div className="add-form">
-          <Formik
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}
-          >
-            <Form className="form-control">
-              <label>Student WPI Address: </label>
-              <ErrorMessage
-                name="student"
-                component="span"
-                className="errorMessage"
-              />
-              <Field
-                id="inputCreateForm"
-                name="student"
-                placeholder="lshilowa@wpi.edu"
-              />
-              <label>Proposal Name: </label>
-              <ErrorMessage
-                name="proposalName"
-                component="span"
-                className="errorMessage"
-              />
-              <Field
-                id="inputCreateForm"
-                name="proposalName"
-                placeholder="Doing Your STEM Project"
-              />
-              <label>Proposal Description: </label>
-              <ErrorMessage
-                name="proposalDescription"
-                component="span"
-                className="errorMessage"
-              />
-              <Field
-                id="inputCreateForm"
-                name="proposalDescription"
-                placeholder="Making my STEM poster which is quite obviously high needs. "
-              />
-              <label>Business Name: </label>
-              <ErrorMessage
-                name="businessName"
-                component="span"
-                className="errorMessage"
-              />
-              <Field
-                id="inputCreateForm"
-                name="businessName"
-                placeholder="Mass Academy of Math and Science"
-              />
-              <div className="form-control-check">
-                <label>Is It Online? </label>
-                <ErrorMessage name="isOnline" component="span" />
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}
+            >
+              <Form className="form-control">
+                <label>Proposal Name: </label>
+                <ErrorMessage
+                  name="proposalName"
+                  component="span"
+                  className="errorMessage"
+                />
                 <Field
                   id="inputCreateForm"
-                  name="isOnline"
-                  type="checkbox"
-                  onClick={() => setPhysicalAddress(!physicalAddress)}
+                  name="proposalName"
+                  placeholder="Doing Your STEM Project"
                 />
-              </div>
-              {physicalAddress && (
-                <>
+                <label>Proposal Description: </label>
+                <ErrorMessage
+                  name="proposalDescription"
+                  component="span"
+                  className="errorMessage"
+                />
+                <Field
+                  id="inputCreateForm"
+                  name="proposalDescription"
+                  placeholder="Making my STEM poster which is quite obviously high needs. "
+                />
+                <label>Business Name: </label>
+                <ErrorMessage
+                  name="businessName"
+                  component="span"
+                  className="errorMessage"
+                />
+                <Field
+                  id="inputCreateForm"
+                  name="businessName"
+                  placeholder="Mass Academy of Math and Science"
+                />
+                <div className="form-control-check">
+                  <label>Is It Online? </label>
+                  <ErrorMessage name="isOnline" component="span" />
+                  <Field
+                    id="inputCreateForm"
+                    name="isOnline"
+                    type="checkbox"
+                    onClick={() => setPhysicalAddress(!physicalAddress)}
+                  />
+                </div>
+                {physicalAddress && (
+                  <>
                     <label>Street Address: </label>
                     <Field
                       id="inputCreateForm"
@@ -206,31 +203,31 @@ const SeeForm = () => {
                       component="span"
                       className="errorMessage"
                     />
-                    <Field
-                      id="inputCreateForm"
-                      name="state"
-                      placeholder="MA"
-                    />
+                    <Field id="inputCreateForm" name="state" placeholder="MA" />
                     <label>Zipcode: </label>
                     <Field
                       id="inputCreateForm"
                       name="zipcode"
                       placeholder="01605"
                     />
-                </>
-              )}
-              <div className="form-control-check">
-                <label>High Needs? </label>
-                <ErrorMessage name="isHighNeeds" component="span" />
-                <Field id="inputCreateForm" name="isHighNeeds" type="checkbox" />
-              </div>
-              <button className="btn btn-block" type="submit">
-                {" "}
-                Submit Form{" "}
-              </button>
-            </Form>
-          </Formik>
-        </div>
+                  </>
+                )}
+                <div className="form-control-check">
+                  <label>High Needs? </label>
+                  <ErrorMessage name="isHighNeeds" component="span" />
+                  <Field
+                    id="inputCreateForm"
+                    name="isHighNeeds"
+                    type="checkbox"
+                  />
+                </div>
+                <button className="btn btn-block" type="submit">
+                  {" "}
+                  Submit Form{" "}
+                </button>
+              </Form>
+            </Formik>
+          </div>
         )}
       </div>
       <div className="form comment-container">

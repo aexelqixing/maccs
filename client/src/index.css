@@ -55,6 +55,28 @@ body {
   font-family: inherit;
 }
 
+.btn-top {
+  background: #283618;
+  color: #e9edc9;
+  border: none;
+  padding: 10px 20px;
+  margin: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.btn-top:hover {
+  background-color: #2d6a4f;
+}
+
+.btn-top:active {
+  background: #606c38;
+  transform: scale(0.95);
+}
+
 .btn:hover {
   background-color: #2d6a4f;
 }

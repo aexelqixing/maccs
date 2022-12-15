@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../helpers/AuthContext';
 
 const Login = () => {
     const [student, setStudent] = useState("");
     const [password, setPassword] = useState("");
+    const { setAuthState } = useContext(AuthContext);
     let navigate = useNavigate();
 
     const login= () => {
@@ -20,6 +22,7 @@ const Login = () => {
             return;
           }
           localStorage.setItem("accessToken", response.data);
+          setAuthState(true);
           navigate(`/home`);
         })
     }

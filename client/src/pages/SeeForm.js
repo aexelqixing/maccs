@@ -26,7 +26,7 @@ const SeeForm = () => {
     axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
       setComments(response.data);
     });
-  }, []);
+  }, [id]);
 
   const initialValues = {
     student: form.student,

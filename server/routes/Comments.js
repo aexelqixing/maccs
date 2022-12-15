@@ -11,6 +11,10 @@ router.get("/:formId", async (req, res) => {
 
 router.post("/", validateToken, async (req, res) => {
     const comment = req.body;
+    const username = req.user.student;
+    const isAdmin = req.user.isAdmin;
+    comment.username = username;
+    comment.isAdmin = isAdmin;
     await Comments.create(comment);
     res.json(comment);
 })

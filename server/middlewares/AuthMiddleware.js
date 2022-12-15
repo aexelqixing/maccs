@@ -7,13 +7,13 @@ const validateToken = (req, res, next) => {
 
     try {
         const validToken = verify(accessToken, "importantsecret");
+        req.user = validToken;
         if (validToken) {
             return next();
         }
     } catch (err) {
         return res.json({ error: err })
     }
-
 }
 
 module.exports = {validateToken}

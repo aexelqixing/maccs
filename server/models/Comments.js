@@ -1,7 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
     const Comments = sequelize.define("Comments", {
-        user: {
+        username: {
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        isAdmin: {
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         },
         commentBody: {

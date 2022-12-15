@@ -9,7 +9,6 @@ const AddForm = () => {
   let navigate = useNavigate();
 
   const initialValues = {
-    student: "",
     proposalName: "",
     proposalDescription: "",
     businessName: "",
@@ -22,12 +21,6 @@ const AddForm = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    student: Yup.string()
-      .email("Enter a valid email address.")
-      .min(9)
-      .max(32)
-      .matches(/^[A-Za-z0-9]+@wpi\.edu$/, "It is not a WPI email (yet).")
-      .required("You must input your WPI Email Address."),
     proposalName: Yup.string().required(),
     proposalDescription: Yup.string().required(),
     businessName: Yup.string().required(),
@@ -38,7 +31,12 @@ const AddForm = () => {
   });
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3001/forms", data).then((response) => {
+    axios.post("http://localhost:3001/forms", data,
+    {
+      headers: {
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
       navigate(`/home`);
     });
   };
@@ -51,17 +49,6 @@ const AddForm = () => {
         validationSchema={validationSchema}
       >
         <Form className="form-control">
-          <label>Student WPI Address: </label>
-          <ErrorMessage
-            name="student"
-            component="span"
-            className="errorMessage"
-          />
-          <Field
-            id="inputCreateForm"
-            name="student"
-            placeholder="lshilowa@wpi.edu"
-          />
           <label>Proposal Name: </label>
           <ErrorMessage
             name="proposalName"

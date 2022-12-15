@@ -20,7 +20,7 @@ const Login = () => {
             return;
           }
           sessionStorage.setItem("accessToken", response.data);
-          navigate(`/login`);
+          navigate(`/home`);
         })
     }
   return (

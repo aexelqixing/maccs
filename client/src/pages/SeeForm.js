@@ -58,7 +58,11 @@ const SeeForm = () => {
   });
 
   const onSubmit = (data) => {
-    axios.put(`http://localhost:3001/forms/byId/${id}`, data).then((response) => {
+    axios.put(`http://localhost:3001/forms/byId/${id}`, data, {
+      headers: {
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
       console.log(response.data);
       navigate(`/home`);
     });
@@ -100,8 +104,8 @@ const SeeForm = () => {
     <>
       <div className={`form ${form.isHighNeeds ? "highNeeds" : ""}`}>
         <h3>{form.proposalName} </h3>
-        <p>Start Date: {form.createdAt}</p>
-        <p>Updated On {form.updatedAt}</p>
+        <p>Start Date: {form.createdAt}  {form.createdAt}</p>
+        <p>Updated On {form.updatedAt}  {form.updatedAt}</p>
         <p>
           <span className="form form-creator">Student: {form.student}</span>
         </p>

@@ -1,12 +1,22 @@
 const express = require('express')
-const db = require('../models')
 const router = express.Router()
+const { validateToken } = require("../middlewares/AuthMiddleware");
 
 const { Forms } = require('../models')
 
-router.get("/", async (req, res) => {
-    const listOfForms = await Forms.findAll()
-    res.json(listOfForms)
+router.get("/", validateToken, async (req, res) => {
+    if (!req.user) {
+        console.log("oh you're not logged in. sorry. ")
+        res.json({error: "User not logged in."});
+    } else {
+        if (req.user.isAdmin) {
+            const listOfForms = await Forms.findAll()
+            res.json(listOfForms)
+        } else {
+            const listOfForms = await Forms.findAll( { where: { student: req.user.student } })
+            res.json(listOfForms)
+        }
+    }
 })
 
 router.get("/byId/:id", async (req, res) => {
@@ -15,9 +25,10 @@ router.get("/byId/:id", async (req, res) => {
     res.json(form);
 })
 
-router.post("/", async (req, res) => {
+router.post("/", validateToken, async (req, res) => {
     const form = req.body
-
+    const username = req.user.student;
+    form.student = username;
     await Forms.create(form);
     res.json(form);
 })

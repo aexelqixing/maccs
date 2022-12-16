@@ -3,7 +3,7 @@ import { FaPencilAlt } from 'react-icons/fa'
 import Description from './Description';
 import { useState } from 'react';
 
-const Form = ({ form }) => {
+const Form = ({ form, isAdmin }) => {
   const [showDescription, setShowDescription] = useState(false)
 
   return (
@@ -15,9 +15,9 @@ const Form = ({ form }) => {
                 onClick={() => setShowDescription(!showDescription)}
             />
         </h3>
-        <p>Start Date: {form.createdAt.substring(0,10)} {form.createdAt.substring(11,18)}</p>
-        <p>Updated On {form.updatedAt.substring(0,10)} {form.updatedAt.substring(11,18)}</p>
-        <p><span className="form form-creator">Student: {form.student}</span> {"  "} <span className={`status-all ${form.status === 'not approved' ? 'rejected' : form.status}`}>{form.status}</span></p>
+        <p>Start Date: {form.createdAt.substring(0,10)} {form.createdAt.substring(11,19)}</p>
+        <p>Updated On {form.updatedAt.substring(0,10)} {form.updatedAt.substring(11,19)}</p>
+        <p>{isAdmin && <span className="form form-creator">Student: {form.student}</span>} <span className={`status-all ${form.status === 'not approved' ? 'rejected' : form.status}`}>{form.status}</span></p>
         {showDescription && <Description form={ form } />}
     </div>
   )

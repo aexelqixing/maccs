@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
         })
         res.json("successfully hashed.");
     }
-    else res.json("User already exists.");
+    else res.json({error: "User already exists."});
 });
 
 router.post('/login', async (req, res) => {

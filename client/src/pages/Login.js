@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../helpers/AuthContext';
@@ -9,12 +9,25 @@ const Login = () => {
     const { setAuthState } = useContext(AuthContext);
     let navigate = useNavigate();
 
+    useEffect(() => {
+      axios.get("http://localhost:3001/forms", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      }).then((response) => {
+        if (!response.data.error) {
+          navigate(`/home`);
+          // alert(response.data.error);
+          return;
+        }
+      });
+    }, []);
+
     const login= () => {
       if (!student || !password) {
         alert('Please input your username and password. ')
         return
     }
-
         const data = { student: student, password: password }
         axios.post("http://localhost:3001/auth/login", data).then((response) => {
           if (response.data.error) {

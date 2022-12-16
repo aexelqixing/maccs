@@ -24,13 +24,13 @@ const Home = () => {
       }
       setListOfForms(response.data);
     });
-  }, [navigate]);
+  }, []);
 
   return (
     <>
-      {authState.isAdmin ? <Header greeting={"ADMIN VIEW FOR"} user={authState.firstName + " " + authState.lastName}/> : <Header user={authState.firstName}/>}
+      {authState.isAdmin ? <Header greeting={"ADMIN VIEW FOR"} user={authState.firstName + " " + authState.lastName}/> : <Header user={authState.firstName + " " + authState.lastName}/>}
       {listOfForms.map((value, key) => {
-        return <Form key={key} form={value} />;
+        return <Form key={key} isAdmin={authState.isAdmin} form={value} />;
       })}
     </>
   );

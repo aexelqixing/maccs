@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate, Link } from 'react-router-dom';
 import * as Yup from "yup";
@@ -6,6 +7,21 @@ import axios from "axios";
 
 const Registration = () => {
   let navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/forms", {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
+      if (!response.data.error) {
+        navigate(`/home`);
+        // alert(response.data.error);
+        return;
+      }
+    });
+  }, []);
+
     const initialValues = {
         firstName: "",
         lastName: "",
@@ -29,6 +45,10 @@ const Registration = () => {
 
       const onSubmit = (data) => {
         axios.post("http://localhost:3001/auth", data).then((response) => {
+          if (response.data.error) {
+            alert(response.data.error);
+            return;
+          }
             console.log(data);
             console.log(response.data);
             navigate(`/`);

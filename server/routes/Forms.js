@@ -6,7 +6,6 @@ const { Forms } = require('../models')
 
 router.get("/", validateToken, async (req, res) => {
     if (!req.user) {
-        console.log("oh you're not logged in. sorry. ")
         res.json({error: "User not logged in."});
     } else {
         if (req.user.isAdmin) {

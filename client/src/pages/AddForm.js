@@ -20,7 +20,7 @@ const AddForm = () => {
         return;
       }
     });
-  }, [navigate]);
+  }, []);
 
   const initialValues = {
     proposalName: "",

@@ -1,12 +1,14 @@
 import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../helpers/AuthContext';
 import Form from "../components/Form";
 import Header from "../components/Header";
 
 const Home = () => {
   const [listOfForms, setListOfForms] = useState([]);
+  const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +19,7 @@ const Home = () => {
     }).then((response) => {
       if (response.data.error) {
         navigate(`/`);
-        alert(response.data.error);
+        // alert(response.data.error);
         return;
       }
       setListOfForms(response.data);
@@ -26,7 +28,7 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      {authState.isAdmin ? <Header greeting={"ADMIN VIEW FOR"} user={authState.firstName + " " + authState.lastName}/> : <Header user={authState.firstName}/>}
       {listOfForms.map((value, key) => {
         return <Form key={key} form={value} />;
       })}

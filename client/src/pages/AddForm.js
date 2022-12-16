@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -7,6 +7,20 @@ import { useNavigate } from "react-router-dom";
 const AddForm = () => {
   const [physicalAddress, setPhysicalAddress] = useState(true);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/forms", {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
+      if (response.data.error) {
+        navigate(`/`);
+        // alert(response.data.error);
+        return;
+      }
+    });
+  }, [navigate]);
 
   const initialValues = {
     proposalName: "",
@@ -36,7 +50,7 @@ const AddForm = () => {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
       },
-    }).then((response) => {
+    }).then(() => {
       navigate(`/home`);
     });
   };

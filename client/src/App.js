@@ -45,6 +45,7 @@ function App() {
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({ ...authState, status: false });
+    window.location.reload()
   };
 
   return (
@@ -55,8 +56,8 @@ function App() {
             <div className="navbar">
               {!authState.status ? (
                 <>
-                  <Link to="/login"> Login </Link>
-                  <Link to="/"> Registration </Link>
+                  <Link to="/"> Login </Link>
+                  <Link to="/registration"> Registration </Link>
                 </>
               ) : (
                 <>
@@ -65,16 +66,15 @@ function App() {
                   <button className="btn-top" onClick={logout}>
                     Logout
                   </button>
-                  <h1>{authState.firstName}</h1>
                 </>
               )}
             </div>
             <div className="container">
               <Routes>
-                <Route path="/" exact element={<Registration />} />
+                <Route path="/registration" exact element={<Registration />} />
                 <Route path="/addForm" exact element={<AddForm />} />
                 <Route path="/form/:id" exact element={<SeeForm />} />
-                <Route path="/login" exact element={<Login />} />
+                <Route path="/" exact element={<Login />} />
                 <Route path="/home" exact element={<Home />} />
               </Routes>
             </div>

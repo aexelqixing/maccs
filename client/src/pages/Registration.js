@@ -1,6 +1,6 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import * as Yup from "yup";
 import axios from "axios";
 
@@ -31,7 +31,7 @@ const Registration = () => {
         axios.post("http://localhost:3001/auth", data).then((response) => {
             console.log(data);
             console.log(response.data);
-            navigate(`/login`);
+            navigate(`/`);
         })
       }
 
@@ -50,7 +50,7 @@ const Registration = () => {
             className="errorMessage"
           />
           <Field
-            id="inputCreateForm"
+            id="registerForm-1"
             name="firstName"
             placeholder="Lamitha"
           />
@@ -61,7 +61,7 @@ const Registration = () => {
             className="errorMessage"
           />
           <Field
-            id="inputCreateForm"
+            id="registerForm-2"
             name="lastName"
             placeholder="Shilowa"
           />
@@ -72,7 +72,7 @@ const Registration = () => {
             className="errorMessage"
           />
           <Field
-            id="inputCreateForm"
+            id="registerForm-3"
             name="gradYear"
             placeholder="2024"
           />
@@ -83,7 +83,7 @@ const Registration = () => {
             className="errorMessage"
           />
           <Field
-            id="inputCreateForm"
+            id="registerForm-4"
             name="student"
             placeholder="lshilowa@wpi.edu"
           />
@@ -95,7 +95,7 @@ const Registration = () => {
           />
           <Field
             type="password"
-            id="inputCreateForm"
+            id="registerForm-5"
             name="password"
             placeholder="Your Password"
           />
@@ -105,6 +105,7 @@ const Registration = () => {
           </button>
         </Form>
       </Formik>
+      <p>Already registered? Login <Link to="/">here.</Link></p>
     </div>
   )
 }

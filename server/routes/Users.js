@@ -45,8 +45,19 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.get('/auth', validateToken, (req, res) => {
-    res.json(req.user);
+router.get('/auth', validateToken, async (req, res) => {
+    const student = req.user.student;
+
+    const user = await Users.findOne({ where: { student: student }});
+
+    if (!user) res.json({error: "You are not logged in. "});
+
+    else {
+        req.user.firstName = user.firstName;
+        req.user.lastName = user.lastName;
+        req.user.gradYear = user.gradYear;
+        res.json(req.user);
+    }
 })
 
 module.exports = router;

@@ -123,6 +123,27 @@ body {
   justify-content: space-between;
 }
 
+.status-all {
+  border-radius: 4px;
+  padding: 6px;
+}
+
+.requested {
+  background: #ffb703;
+}
+
+.approved {
+  background: #cdb4db;
+}
+
+.completed {
+  background: #a7c957;
+}
+
+.rejected {
+  background: #e63946;
+}
+
 .comment {
   background: #60d394;
   padding: 10px 10px;

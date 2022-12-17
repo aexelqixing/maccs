@@ -37,6 +37,7 @@ const Login = () => {
           localStorage.setItem("accessToken", response.data);
           setAuthState(true);
           navigate(`/home`);
+          window.location.reload();
         })
     }
   return (

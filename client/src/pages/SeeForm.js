@@ -17,7 +17,15 @@ const SeeForm = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/forms/byId/${id}`).then((response) => {
+    axios.get(`http://localhost:3001/forms/byId/${id}`, {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      },}).then((response) => {
+        if (response.data.error) {
+          navigate(`/`);
+          // alert(response.data.error);
+          return;
+        }
       setFormObject(response.data);
       setStudent(response.data.student);
       setPhysicalAddress(!response.data.isOnline);
@@ -111,7 +119,7 @@ const SeeForm = () => {
           {form.createdAt ? form.createdAt.substring(11, 19) : ""}
         </p>
         <p>
-          Updated On {form.updatedAt ? form.updatedAt.substring(0, 10) : "..."}{" "}
+          Updated: {form.updatedAt ? form.updatedAt.substring(0, 10) : "..."}{" "}
           {form.updatedAt ? form.createdAt.substring(11, 19) : ""}
         </p>
         <p>
@@ -120,7 +128,7 @@ const SeeForm = () => {
         <div className="description">
           <h3>Description: {form.proposalDescription} </h3>
           <h3>Business Name: {form.businessName}</h3>
-          <h3>High Needs: {form.highNeeds ? "Yes" : "No"}</h3>
+          <h3>High Needs: {form.isHighNeeds ? "Yes" : "No"}</h3>
           <h3>Hours: {form.hours}</h3>
           <button
             className="btn"

@@ -55,6 +55,11 @@ body {
   font-family: inherit;
 }
 
+.btn-edit-status {
+  background: #f3de2c;
+  color: black;
+}
+
 .btn-top {
   background: #283618;
   color: #e9edc9;
@@ -120,6 +125,11 @@ body {
 .form h3 {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.radio {
+  padding: 10px 20px;
   justify-content: space-between;
 }
 

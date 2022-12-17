@@ -9,19 +9,23 @@ router.get("/", validateToken, async (req, res) => {
         res.json({error: "User not logged in."});
     } else {
         if (req.user.isAdmin) {
-            const listOfForms = await Forms.findAll()
+            const listOfForms = await Forms.findAll({order: [['updatedAt', 'DESC']]})
             res.json(listOfForms)
         } else {
-            const listOfForms = await Forms.findAll( { where: { student: req.user.student } })
+            const listOfForms = await Forms.findAll( { where: { student: req.user.student }, order: [['updatedAt', 'DESC']] })
             res.json(listOfForms)
         }
     }
 })
 
-router.get("/byId/:id", async (req, res) => {
-    const id = req.params.id;
-    const form = await Forms.findByPk(id);
-    res.json(form);
+router.get("/byId/:id", validateToken, async (req, res) => {
+    if (!req.user) {
+        res.json({error: "User not logged in."});
+    } else {
+        const id = req.params.id;
+        const form = await Forms.findByPk(id);
+        res.json(form);
+    }
 })
 
 router.post("/", validateToken, async (req, res) => {

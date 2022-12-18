@@ -1,10 +1,11 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import Comment from "../components/Comment";
 import axios from "axios";
+import { AuthContext } from '../helpers/AuthContext';
+import { FaTimes } from "react-icons/fa";
 
 const SeeForm = () => {
   let { id } = useParams();
@@ -14,6 +15,7 @@ const SeeForm = () => {
   const [student, setStudent] = useState("");
   const [editForm, setEditForm] = useState(false);
   const [physicalAddress, setPhysicalAddress] = useState(true);
+  const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -242,7 +244,14 @@ const SeeForm = () => {
         <h3>Comments</h3>
         <div className="listOfComments">
           {comments.map((comment, key) => {
-            return <Comment key={key} comment={comment} />;
+            return <div key={key} className={comment.isAdmin ? "admin" : "comment"}>
+            <h3>{comment.commentBody} {authState.username === comment.username && <FaTimes style={{ color: "red", cursor: "pointer" }}/>}</h3>
+            <p>
+              <span className="form form-creator">{comment.username}</span> Sent on{" "}
+              {comment.createdAt ? comment.createdAt.substring(0, 10) : "..."}{" "}
+              {comment.createdAt ? comment.createdAt.substring(11, 19) : ""}
+            </p>
+          </div>;
           })}
         </div>
         <div className="add-form form-control">

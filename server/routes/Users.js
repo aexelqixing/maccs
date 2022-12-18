@@ -4,7 +4,8 @@ const { Users } = require('../models');
 const bcrypt = require("bcrypt");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
-const {sign} = require('jsonwebtoken')
+const {sign} = require('jsonwebtoken');
+const { response } = require('express');
 
 router.post("/", async (req, res) => {
     const { firstName, lastName, gradYear, student, password, isAdmin } = req.body;
@@ -38,8 +39,9 @@ router.post('/login', async (req, res) => {
             if (!match) res.json({error: "Wrong Username Or Password Combination. "});
             else {
                 const accessToken = sign({student: user.student, id: user.id, isAdmin: user.isAdmin}, "importantsecret");
-                console.log("accessToken" + accessToken);
-                res.json(accessToken);
+                // console.log("accessToken" + accessToken);
+                res.json({token: accessToken, firstName: user.firstName, lastName: user.lastName, gradYear: user.gradYear, 
+                student: user.isAdmin, id: user.id});
             }
         })
     }
@@ -53,6 +55,8 @@ router.get('/auth', validateToken, async (req, res) => {
     if (!user) res.json({error: "You are not logged in. "});
 
     else {
+        req.user.isAdmin = user.isAdmin;
+        req.user.username = user.student;
         req.user.firstName = user.firstName;
         req.user.lastName = user.lastName;
         req.user.gradYear = user.gradYear;

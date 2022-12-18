@@ -22,9 +22,16 @@ router.get("/byId/:id", validateToken, async (req, res) => {
     if (!req.user) {
         res.json({error: "User not logged in."});
     } else {
+        // console.log(req.user.student);
         const id = req.params.id;
         const form = await Forms.findByPk(id);
-        res.json(form);
+        if (!req.user.isAdmin && req.user.student !== form.student) {
+            res.json({error: "Not this user."})
+        } else {
+            res.json(form);
+        }
+        // console.log(form.student);
+        // res.json(form);
     }
 })
 

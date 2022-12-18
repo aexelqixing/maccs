@@ -34,10 +34,17 @@ const Login = () => {
             alert(response.data.error);
             return;
           }
-          localStorage.setItem("accessToken", response.data);
-          setAuthState(true);
+          localStorage.setItem("accessToken", response.data.token);
+          setAuthState({
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            gradYear: response.data.gradYear,
+            username: response.data.student,
+            isAdmin: response.data.isAdmin,
+            id: response.data.id,
+            status: true,
+          });
           navigate(`/home`);
-          window.location.reload();
         })
     }
   return (

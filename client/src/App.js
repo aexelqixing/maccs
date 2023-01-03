@@ -10,6 +10,8 @@ import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+// import { Login, Register } from "./components/login";
+
 function App() {
   const [authState, setAuthState] = useState({
     firstName: "",

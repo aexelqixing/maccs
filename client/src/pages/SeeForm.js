@@ -109,6 +109,7 @@ const SeeForm = () => {
         const commentToAdd = response.data;
         setComments([...comments, commentToAdd]);
         setNewComment("");
+        window.location.reload();
       });
   };
 

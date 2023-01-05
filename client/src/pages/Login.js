@@ -45,6 +45,7 @@ const Login = () => {
             status: true,
           });
           navigate(`/home`);
+          window.location.reload();
         })
     }
   return (

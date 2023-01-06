@@ -54,6 +54,7 @@ function App() {
         <AuthContext.Provider value={{ authState, setAuthState }}>
           <Router>
             <div className="navbar">
+              <h3>{authState.username}</h3>
               {!authState.status ? (
                 <>
                   <Link to="/"> Login </Link>

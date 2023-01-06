@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         hours: {
             type: DataTypes.INTEGER,
             defaultValue: 0
-        }
+        },
     })
 
     Forms.associate = (models) => {

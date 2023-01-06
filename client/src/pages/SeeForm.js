@@ -139,33 +139,30 @@ const SeeForm = () => {
   return (
     <>
       <div className={`form ${form.isHighNeeds ? "highNeeds" : ""}`}>
-        <h3>{form.proposalName} </h3>
+        <h3>{form.proposalName}</h3>
+        <p><b>Student WPI Address:</b> {form.student}</p>
         <p>
-          Start Date: {form.createdAt ? form.createdAt.substring(0, 10) : "..."}{" "}
-          {form.createdAt ? form.createdAt.substring(11, 19) : ""}
-        </p>
-        <p>
-          Updated: {form.updatedAt ? form.updatedAt.substring(0, 10) : "..."}{" "}
+          <b>Created Date:</b>{" "}
+          {form.createdAt ? form.createdAt.substring(0, 10) : "..."}{" "}
+          {form.createdAt ? form.createdAt.substring(11, 19) : ""} |{" "}
+          <b>Updated Date:</b>{" "}
+          {form.updatedAt ? form.updatedAt.substring(0, 10) : "..."}{" "}
           {form.updatedAt ? form.createdAt.substring(11, 19) : ""}
         </p>
-        <p>
-          <span className="form form-creator">Student: {form.student}</span>
-        </p>
-        <div className="description">
-          <h3>Description: {form.proposalDescription} </h3>
-          <h3>Business Name: {form.businessName}</h3>
-          <h3>High Needs: {form.isHighNeeds ? "Yes" : "No"}</h3>
-          <h3>Hours: {form.hours}</h3>
-          <button
-            className="btn"
-            onClick={() => {
-              setEditForm(!editForm);
-            }}
-          >
-            {" "}
-            {editForm ? "Close Editing" : "Edit Form"}{" "}
-          </button>
-        </div>
+        <p><b>Description:</b> {form.proposalDescription}</p>
+        <p><b>Business Name:</b> {form.businessName}</p>
+        <p><b>Location: </b> {form.isOnline ? "Online" : form.streetAddress + ", " + form.city + ", " + form.state + " " + form.zipcode} </p>
+        <p><b>High Needs:</b> {form.isHighNeeds ? "Yes" : "No"}</p>
+        <p><b>Hours:</b> {form.hours}</p>
+        <button
+          className="btn"
+          onClick={() => {
+            setEditForm(!editForm);
+          }}
+        >
+          {" "}
+          {editForm ? "Close Editing" : "Edit Form"}{" "}
+        </button>
         {editForm && (
           <div className="add-form">
             <Formik

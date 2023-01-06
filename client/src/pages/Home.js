@@ -25,6 +25,7 @@ const Home = () => {
           return;
         }
         setListOfForms(response.data);
+        console.log(listOfForms);
       });
   }, []);
 

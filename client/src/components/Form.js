@@ -1,5 +1,5 @@
 import React from "react";
-import { FaPencilAlt } from "react-icons/fa";
+import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
@@ -13,6 +13,9 @@ const Form = ({ form, isAdmin }) => {
     { label: "Completed", value: "completed" },
     { label: "Not Approved", value: "rejected" },
   ];
+
+  const [changeAddHours, setChangeAddHours] = useState(false);
+  const [addFormHours, setAddFormHours] = useState(0);
 
   const handleChange = (event) => {
     setFormStatus(event.target.value);
@@ -49,6 +52,35 @@ const Form = ({ form, isAdmin }) => {
       });
   };
 
+  const addHours = () => {
+    const data = { ...form, hours: parseFloat(form.hours) + parseFloat(addFormHours) }
+    axios.put(`http://localhost:3001/forms/byId/${form.id}`, data, {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
+      console.log(response.data);
+        navigate(`/home`);
+        window.location.reload();
+    })
+  }
+
+  const deleteForm = (id) => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this form? It will be deleted permanently."
+      )
+    ) {
+      axios
+        .delete(`http://localhost:3001/forms/${id}`, {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        })
+        .then(() => {
+          window.location.reload();
+        });
+    }
+  };
+
   return (
     <tr>
       <td>{form.student}</td>
@@ -58,7 +90,16 @@ const Form = ({ form, isAdmin }) => {
           {form.status === "rejected" ? "not-approved" : form.status}
         </span>
       </td>
-      <td>{form.hours}</td>
+      <td>
+        {changeAddHours ? (
+          <div className="add-form form-control">
+            <input type="number" onChange={(event) => {setAddFormHours(event.target.value)}}/>
+            <button className="btn btn-block" onClick={addHours}>Add Hours</button>
+          </div>
+        ) : (
+          form.hours
+        )}
+      </td>
       <td>
         {form.createdAt.substring(0, 10)} {form.createdAt.substring(11, 19)}
       </td>
@@ -84,7 +125,14 @@ const Form = ({ form, isAdmin }) => {
         ) : (
           <div>
             {form.status === "approved" && (
-              <button className="btn">Edit Hours</button>
+              <button
+                className="btn"
+                onClick={() => {
+                  setChangeAddHours(!changeAddHours);
+                }}
+              >
+                Edit Hours
+              </button>
             )}{" "}
             {isAdmin && (
               <button
@@ -99,74 +147,17 @@ const Form = ({ form, isAdmin }) => {
             <FaPencilAlt
               style={{ color: "#f48c06", cursor: "pointer" }}
               onClick={() => navigate(`/form/${form.id}`)}
+            />{" "}
+            <FaTrashAlt
+              style={{ color: "red", cursor: "pointer" }}
+              onClick={() => {
+                deleteForm(form.id);
+              }}
             />
           </div>
         )}
       </td>
     </tr>
-    // <div className={`form ${form.isHighNeeds ? "highNeeds" : ""}`}>
-    //   <h3>
-    //     <div>
-    //     <span
-    //     className={`status-all ${
-    //       form.status
-    //     }`}
-    //   >
-    //     {form.status === "rejected" ? "not approved" : form.status}
-    //   </span> {" "}
-    //     {form.proposalName}
-    //     </div>
-
-    // <div>
-    // {(form.status === "approved" || form.status === "completed") && (
-    //   <button className="btn">Edit Hours</button>
-    // )}{" "}
-    // {isAdmin && (
-    //   <button
-    //     className="btn btn-edit-status"
-    //     onClick={() => {
-    //       setChangeStatus(!changeStatus);
-    //     }}
-    //   >
-    //     Edit Status
-    //   </button>
-    // )} {" "}
-    // <FaPencilAlt
-    //   style={{ color: "#f48c06", cursor: "pointer" }}
-    //   onClick={() => navigate(`/form/${form.id}`)}
-    // />
-    // </div>
-    //   </h3>
-    //   <p>
-    //     <b>Creation Date:</b> {form.createdAt.substring(0, 10)}{" "}
-    //     {form.createdAt.substring(11, 19)} | <b>Updated:</b> {form.updatedAt.substring(0, 10)}{" "}
-    //     {form.updatedAt.substring(11, 19)}
-    //   </p>
-    //   {(form.status === "approved" || form.status === "completed") && (
-    //     <p>Hours: {form.hours}</p>
-    //   )}
-    //   <p>
-    //     {isAdmin && (
-    //       <b>Student: {form.student}</b>
-    //     )}
-    //   </p>
-    //   {changeStatus && (
-    // <div>
-    //   <Dropdown
-    //     options={options}
-    //     value={formStatus}
-    //     onChange={handleChange}
-    //   />
-
-    //   <button
-    //     className="btn btn-edit-status"
-    //     onClick={onSubmitStatusChange}
-    //   >
-    //     Change Status
-    //   </button>
-    // </div>
-    //   )}
-    // </div>
   );
 };
 

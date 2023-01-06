@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { AuthContext } from '../helpers/AuthContext';
+import { AuthContext } from "../helpers/AuthContext";
 import { FaTimes } from "react-icons/fa";
 
 const SeeForm = () => {
@@ -19,19 +19,22 @@ const SeeForm = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/forms/byId/${id}`, {
-      headers: {
-        accessToken: localStorage.getItem("accessToken"),
-      },}).then((response) => {
+    axios
+      .get(`http://localhost:3001/forms/byId/${id}`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
         if (response.data.error) {
           navigate(`/`);
           // alert(response.data.error);
           return;
         }
-      setFormObject(response.data);
-      setStudent(response.data.student);
-      setPhysicalAddress(!response.data.isOnline);
-    });
+        setFormObject(response.data);
+        setStudent(response.data.student);
+        setPhysicalAddress(!response.data.isOnline);
+      });
 
     axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
       setComments(response.data);
@@ -78,6 +81,26 @@ const SeeForm = () => {
         console.log(response.data);
         navigate(`/home`);
       });
+  };
+
+  const deleteComment = (id) => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this comment? It will be deleted permanently."
+      )
+    ) {
+      axios
+        .delete(`http://localhost:3001/comments/${id}`, {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        })
+        .then(() => {
+          setComments(
+            comments.filter((val) => {
+              return val.id != id;
+            })
+          );
+        });
+    }
   };
 
   const addComment = () => {
@@ -245,14 +268,29 @@ const SeeForm = () => {
         <h3>Comments</h3>
         <div className="listOfComments">
           {comments.map((comment, key) => {
-            return <div key={key} className={comment.isAdmin ? "admin" : "comment"}>
-            <h3>{comment.commentBody} {authState.username === comment.username && <FaTimes style={{ color: "red", cursor: "pointer" }}/>}</h3>
-            <p>
-              <span className="form form-creator">{comment.username}</span> Sent on{" "}
-              {comment.createdAt ? comment.createdAt.substring(0, 10) : "..."}{" "}
-              {comment.createdAt ? comment.createdAt.substring(11, 19) : ""}
-            </p>
-          </div>;
+            return (
+              <div key={key} className={comment.isAdmin ? "admin" : "comment"}>
+                <h3>
+                  {comment.commentBody}{" "}
+                  {authState.username === comment.username && (
+                    <FaTimes
+                      style={{ color: "red", cursor: "pointer" }}
+                      onClick={() => {
+                        deleteComment(comment.id);
+                      }}
+                    />
+                  )}
+                </h3>
+                <p>
+                  <span className="form form-creator">{comment.username}</span>{" "}
+                  Sent on{" "}
+                  {comment.createdAt
+                    ? comment.createdAt.substring(0, 10)
+                    : "..."}{" "}
+                  {comment.createdAt ? comment.createdAt.substring(11, 19) : ""}
+                </p>
+              </div>
+            );
           })}
         </div>
         <div className="add-form form-control">

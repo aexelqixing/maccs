@@ -101,7 +101,7 @@ table, th, td {
   padding: 5px 20px;
 }
 
-tr:hover {
+tbody:hover {
   background-color: #d6eeee;
 }
 

@@ -28,7 +28,7 @@ const SeeForm = () => {
       .then((response) => {
         if (response.data.error) {
           navigate(`/`);
-          // alert(response.data.error);
+          alert(response.data.error);
           return;
         }
         setFormObject(response.data);

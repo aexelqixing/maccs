@@ -70,6 +70,24 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// grabbing all of the users
+router.get("/", validateToken, async (req, res) => {
+  // if there isn't a user, then don't show any forms
+  if (!req.user) {
+      res.json({error: "User not logged in."});
+  } else {
+      // if the user is an admin, show all users in descending order of last name
+      if (req.user.isAdmin) {
+          const listOfUsers = await Users.findAll({order: [['lastName', 'DESC']]})
+          res.json(listOfUsers)
+      } 
+      // otherwise, show only forms for the student in descending order of updated
+      else {
+          res.json({error: "User is not admin. You cannot access these users. "})
+      }
+  }
+})
+
 // check if a user is logged in (otherwise they cannot access pages)
 router.get("/auth", validateToken, async (req, res) => {
   // get the student request access from the student

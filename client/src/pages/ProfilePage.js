@@ -9,7 +9,8 @@ const ProfilePage = () => {
   const { authState } = useContext(AuthContext);
   const [user, setUser] = useState({});
   const [listOfForms, setListOfForms] = useState([]);
-  const [hours, setHours] = useState(0);
+  const [completedHours, setCompletedHours] = useState(0);
+  const [notVerifiedHours, setNotVerifiedHours] = useState(0);
   const [updateHoursOnce, setUpdateOnce] = useState(true);
 
   useEffect(() => {
@@ -31,7 +32,10 @@ const ProfilePage = () => {
   const updateHours = () => {
     listOfForms.map((form) => {
         if (form.status === "completed") {
-          setHours(hours + form.hours);
+          setCompletedHours(completedHours + form.hours);
+        }
+        if (form.status === "approved") {
+          setNotVerifiedHours(notVerifiedHours + form.hours);
         }
       });
       setUpdateOnce(false);
@@ -44,7 +48,7 @@ const ProfilePage = () => {
         <p>
           <b>Graduation Year:</b> {user.gradYear}
         </p>
-        <p>Hours: {hours}</p>
+        <p>Verfied Hours: {completedHours} | Not Verified Hours: {notVerifiedHours}</p>
         {updateHoursOnce && <button
           className="btn"
           onClick={updateHours}

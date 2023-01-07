@@ -3,17 +3,17 @@ import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
-import Form from "../components/Form";
 import Header from "../components/Header";
+import Student from "../components/Student";
 
-const Home = () => {
-  const [listOfForms, setListOfForms] = useState([]);
+const SeeUsers = () => {
+  const [listOfUsers, setListOfUsers] = useState([]);
   const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/forms", {
+      .get("http://localhost:3001/auth", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -24,8 +24,7 @@ const Home = () => {
           alert(response.data.error);
           return;
         }
-        setListOfForms(response.data);
-        console.log(listOfForms);
+        setListOfUsers(response.data);
       });
   }, []);
 
@@ -33,7 +32,7 @@ const Home = () => {
     <>
       {authState.isAdmin ? (
         <Header
-          greeting={"ADMIN VIEW FOR"}
+          greeting={"ALL CURRENT USERS FOR "}
           user={authState.firstName + " " + authState.lastName}
         />
       ) : (
@@ -42,19 +41,18 @@ const Home = () => {
       <table>
         <thead>
           <th>Student WPI Address</th>
-          <th>Proposal Name</th>
-          <th>Status</th>
-          <th>Hours</th>
-          <th>Created Date</th>
-          <th>Updated Date</th>
+          <th>Student Name</th>
+          <th>Graduation Year</th>
+          <th>Verified Hours</th>
+          <th>Unverified Hours</th>
           <th>Actions</th>
         </thead>
-        {listOfForms.map((form, key) => {
-          return <Form key={key} isAdmin={authState.isAdmin} form={form} />;
+        {listOfUsers.map((user, key) => {
+          return <Student key={key} user={user} />
         })}
       </table>
     </>
   );
 };
 
-export default Home;
+export default SeeUsers;

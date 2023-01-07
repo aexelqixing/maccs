@@ -17,7 +17,7 @@ const Login = () => {
       }).then((response) => {
         if (!response.data.error) {
           navigate(`/home`);
-          // alert(response.data.error);
+          alert(response.data.error);
           return;
         }
       });

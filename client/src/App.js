@@ -10,6 +10,8 @@ import ProfilePage from "./pages/ProfilePage";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import PageNotFound from "./pages/PageNotFound";
+import SeeUsers from "./pages/SeeUsers";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -55,7 +57,6 @@ function App() {
         <AuthContext.Provider value={{ authState, setAuthState }}>
           <Router>
             <div className="navbar">
-              <h3>{authState.username}</h3>
               {!authState.status ? (
                 <>
                   <Link to="/"> Login </Link>
@@ -63,8 +64,10 @@ function App() {
                 </>
               ) : (
                 <>
+                  <h3>{authState.username}</h3>
                   <Link to="/home"> Home </Link>
                   <Link to="/addForm"> Add Form </Link>
+                  {authState.isAdmin && <Link to="/seeUsers">Users</Link>}
                   <button className="btn-top" onClick={logout}>
                     Logout
                   </button>
@@ -79,6 +82,8 @@ function App() {
                 <Route path="/" exact element={<Login />} />
                 <Route path="/home" exact element={<Home />} />
                 <Route path="/profile/:id" exact element={<ProfilePage />}/>
+                <Route path="/seeUsers" exact element={<SeeUsers />}/>
+                <Route path="*" exact element={<PageNotFound />}/>
               </Routes>
             </div>
           </Router>

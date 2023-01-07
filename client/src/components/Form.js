@@ -1,6 +1,6 @@
 import React from "react";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
@@ -82,8 +82,8 @@ const Form = ({ form, isAdmin }) => {
   };
 
   return (
-    <tr>
-      <td>{form.student}</td>
+    <tbody>
+      <td><Link to={`/profile/${form.UserId}`}>{form.student}</Link></td>
       <td>{form.proposalName}</td>
       <td>
         <span className={`status-all ${form.status}`}>
@@ -157,7 +157,7 @@ const Form = ({ form, isAdmin }) => {
           </div>
         )}
       </td>
-    </tr>
+    </tbody>
   );
 };
 

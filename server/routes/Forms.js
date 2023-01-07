@@ -45,11 +45,28 @@ router.get("/byId/:id", validateToken, async (req, res) => {
     }
 })
 
+// getting information of a specific form by id
+router.get("/byUserId/:id", validateToken, async (req, res) => {
+    // if the user isn't logged in, then return error
+    if (!req.user) {
+        res.json({error: "User not logged in."});
+    } 
+    // otherwise, grab all the informations
+    else {
+        // console.log(req.user.student);
+        const id = req.params.id; // get the id
+        const listOfForms = await Forms.findAll({ where: {UserId: id}})
+        res.json(listOfForms);
+    }
+})
+
 // creating a form
 router.post("/", validateToken, async (req, res) => {
     const form = req.body // get the form data from the body
     const username = req.user.student; // get the username
     form.student = username;
+
+    form.UserId = req.user.id;
     await Forms.create(form); // create the form
     res.json(form);
 })

@@ -40,7 +40,7 @@ const Home = () => {
         <Header user={authState.firstName + " " + authState.lastName} />
       )}
       <table>
-        <tr>
+        <thead>
           <th>Student WPI Address</th>
           <th>Proposal Name</th>
           <th>Status</th>
@@ -48,7 +48,7 @@ const Home = () => {
           <th>Created Date</th>
           <th>Updated Date</th>
           <th>Actions</th>
-        </tr>
+        </thead>
         {listOfForms.map((form, key) => {
           return <Form key={key} isAdmin={authState.isAdmin} form={form} />;
         })}

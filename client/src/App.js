@@ -6,6 +6,7 @@ import SeeForm from "./pages/SeeForm";
 import Footer from "./components/Footer";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
+import ProfilePage from "./pages/ProfilePage";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -77,6 +78,7 @@ function App() {
                 <Route path="/form/:id" exact element={<SeeForm />} />
                 <Route path="/" exact element={<Login />} />
                 <Route path="/home" exact element={<Home />} />
+                <Route path="/profile/:id" exact element={<ProfilePage />}/>
               </Routes>
             </div>
           </Router>

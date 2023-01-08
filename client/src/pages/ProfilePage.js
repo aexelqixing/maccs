@@ -58,6 +58,7 @@ const ProfilePage = () => {
       </div>
       <table>
         <thead>
+          <tr>
           <th>Student WPI Address</th>
           <th>Proposal Name</th>
           <th>Status</th>
@@ -65,10 +66,13 @@ const ProfilePage = () => {
           <th>Created Date</th>
           <th>Updated Date</th>
           <th>Actions</th>
+          </tr>
         </thead>
+        <tbody>
         {listOfForms.map((form, key) => {
           return <Form key={key} isAdmin={authState.isAdmin} form={form} />;
         })}
+        </tbody>
       </table>
     </>
   );

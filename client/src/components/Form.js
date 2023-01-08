@@ -82,7 +82,7 @@ const Form = ({ form, isAdmin }) => {
   };
 
   return (
-    <tbody>
+    <tr>
       <td><Link to={`/profile/${form.UserId}`}>{form.student}</Link></td>
       <td>{form.proposalName}</td>
       <td>
@@ -157,7 +157,7 @@ const Form = ({ form, isAdmin }) => {
           </div>
         )}
       </td>
-    </tbody>
+    </tr>
   );
 };
 

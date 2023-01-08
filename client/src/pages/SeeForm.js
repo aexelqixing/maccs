@@ -16,6 +16,10 @@ const SeeForm = () => {
   const [editForm, setEditForm] = useState(false);
   const [physicalAddress, setPhysicalAddress] = useState(true);
   const { authState } = useContext(AuthContext);
+  const [image, setImage] = useState();
+  const [imageName, setImageName] = useState("");
+  const [getImageURL, setGetImageURL] = useState('');
+  const [closeImage, setCloseImage] = useState(false);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +32,7 @@ const SeeForm = () => {
       .then((response) => {
         if (response.data.error) {
           navigate(`/`);
-          alert(response.data.error);
+          // alert(response.data.error);
           return;
         }
         setFormObject(response.data);
@@ -136,6 +140,31 @@ const SeeForm = () => {
       });
   };
 
+  const imageHandler = () => {
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("filename", imageName);
+
+    axios
+      .put(`http://localhost:3001/forms/upload/${id}`, formData)
+      .then((response) => {
+        console.log(response.data);
+        window.location.reload();
+      });
+  }
+
+  const getImage = () => {
+    axios.get(`http://localhost:3001/forms/upload/${id}`, {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
+      setGetImageURL(response.data);
+      console.log(getImageURL);
+    })
+    setCloseImage(!closeImage);
+  }
+
   return (
     <>
       <div className={`form ${form.isHighNeeds ? "highNeeds" : ""}`}>
@@ -154,6 +183,20 @@ const SeeForm = () => {
         <p><b>Location: </b> {form.isOnline ? "Online" : form.streetAddress + ", " + form.city + ", " + form.state + " " + form.zipcode} </p>
         <p><b>High Needs:</b> {form.isHighNeeds ? "Yes" : "No"}</p>
         <p><b>Hours:</b> {form.hours}</p>
+        <input type="file" name="image" accept="image/*" multiple={false} onChange={(e) => {setImage(e.target.files[0]); setImageName(e.target.files[0].name)}}/>
+        <button
+          className="btn"
+          onClick={imageHandler}
+        >
+          Submit
+        </button>
+        <button
+          className="btn"
+          onClick={getImage}
+        >
+          {closeImage ? "Close Image" : "Get Image"}
+        </button>
+        {getImageURL && closeImage && <img src={require("../assets/images/" + getImageURL)} alt="img" />}
         <button
           className="btn"
           onClick={() => {

@@ -3,6 +3,19 @@ const express = require('express')
 const router = express.Router()
 const { validateToken } = require("../middlewares/AuthMiddleware"); // authentication from tokens
 
+const multer = require('multer');
+const path = require('path');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../../client/src/assets/images'));
+    },
+    filename: (req, file, cb) => {
+        console.log(file);
+        cb(null, Date.now() + path.extname(file.originalname));
+    },
+});
+const upload = multer({ storage: storage });
+
 const { Forms } = require('../models') // the table we are importing
 
 // grabbing all of the forms
@@ -83,6 +96,24 @@ router.put("/byId/:id", async (req, res) => {
     } else {
         res.json(updated); // just return the information
     }
+})
+
+router.put("/upload/:id", upload.single('image'), async (req, res) => {
+    if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+        res.json({ error: "Only image files (jpg, jpeg, png) are allowed. "})
+    } else {
+        const image = req.file.filename;
+        const id = req.params.id;
+        await Forms.update({ image: image }, { where: { id: id } });
+        res.json("Uploaded successfully.");
+    }
+})
+
+router.get("/upload/:id", async (req, res) => {
+    const id = req.params.id;
+    const form = await Forms.findByPk(id);
+    const image = form.image;
+    res.json(image);
 })
 
 // delete a form

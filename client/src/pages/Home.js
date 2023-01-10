@@ -45,7 +45,10 @@ const Home = () => {
           <th>Student WPI Address</th>
           <th>Proposal Name</th>
           <th>Status</th>
-          <th>Hours</th>
+          <th>Approved?</th>
+          <th>Verified?</th>
+          <th>Unconfirmed Hours</th>
+          <th>Verified Hours</th>
           <th>Created Date</th>
           <th>Updated Date</th>
           <th>Actions</th>

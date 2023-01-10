@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: "0000"
         },
+        lockerNumber: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         student: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -23,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
         isAdmin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
+        },
+        nonApprovedHours: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        verifiedHours: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
         },
     })
 

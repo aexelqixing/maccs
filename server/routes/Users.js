@@ -10,7 +10,7 @@ const { sign } = require("jsonwebtoken");
 // registering a user
 router.post("/", async (req, res) => {
   // get all attributes from the request by destructuring the body of the request
-  const { firstName, lastName, gradYear, student, password, isAdmin } =
+  const { firstName, lastName, gradYear, lockerNumber, student, password, isAdmin } =
     req.body;
 
   // find if the user exists already
@@ -23,6 +23,7 @@ router.post("/", async (req, res) => {
         lastName: lastName,
         student: student,
         gradYear: gradYear,
+        lockerNumber: lockerNumber,
         password: hash,
         isAdmin: isAdmin,
       });
@@ -62,6 +63,7 @@ router.post("/login", async (req, res) => {
           firstName: user.firstName,
           lastName: user.lastName,
           gradYear: user.gradYear,
+          lockerNumer: user.lockerNumber,
           student: user.isAdmin,
           id: user.id,
         });
@@ -105,6 +107,7 @@ router.get("/auth", validateToken, async (req, res) => {
     req.user.firstName = user.firstName;
     req.user.lastName = user.lastName;
     req.user.gradYear = user.gradYear;
+    req.user.lockerNumber = user.lockerNumber;
     res.json(req.user);
   }
 });

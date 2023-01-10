@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        urlLink: {
+            type: DataTypes.STRING,
+        },
         streetAddress: {
             type: DataTypes.STRING,
         },
@@ -36,14 +39,30 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
+        wasApproved: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
+        wasVerified: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
         status: {
             type: DataTypes.STRING,
             defaultValue: "requested",
         },
-        hours: {
+        nonApprovedHours: {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
+        verifiedHours: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        // hours: {
+        //     type: DataTypes.INTEGER,
+        //     defaultValue: 0,
+        // },
         image: {
             type: DataTypes.STRING,
         }

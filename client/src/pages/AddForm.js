@@ -31,17 +31,19 @@ const AddForm = () => {
     state: "",
     zipcode: "",
     isOnline: false,
+    urlLink: "",
     isHighNeeds: false,
   };
 
   const validationSchema = Yup.object().shape({
-    proposalName: Yup.string().required(),
-    proposalDescription: Yup.string().required(),
-    businessName: Yup.string().required(),
+    proposalName: Yup.string().required("Please put in the name of your proposal."),
+    proposalDescription: Yup.string().required("Please put what you will be doing."),
+    businessName: Yup.string().required("Where will you be doing this volunteer service?"),
     streetAddress: Yup.string(),
     city: Yup.string(),
     state: Yup.string().max(2, "This is just the state's abbreviation."),
     zipcode: Yup.string(),
+    urlLink: Yup.string(),
   });
 
   const onSubmit = (data) => {
@@ -106,7 +108,7 @@ const AddForm = () => {
               onClick={() => setPhysicalAddress(!physicalAddress)}
             />
           </div>
-          {physicalAddress && (
+          {physicalAddress ? (
             <>
                 <label>Street Address: </label>
                 <Field
@@ -137,6 +139,19 @@ const AddForm = () => {
                   name="zipcode"
                   placeholder="01605"
                 />
+            </>
+          ) : (
+            <><label>URL Link: </label>
+            <ErrorMessage
+              name="urlLink"
+              component="span"
+              className="errorMessage"
+            />
+            <Field
+              id="inputCreateForm"
+              name="urlLink"
+              placeholder="www.yes.com"
+            />
             </>
           )}
           <div className="form-control-check">

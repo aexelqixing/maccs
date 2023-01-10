@@ -1,5 +1,5 @@
 import React from "react";
-import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
+import { FaPencilAlt, FaTrashAlt, FaCheck, FaCheckDouble, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
@@ -53,7 +53,7 @@ const Form = ({ form, isAdmin }) => {
   };
 
   const addHours = () => {
-    const data = { ...form, hours: parseFloat(form.hours) + parseFloat(addFormHours) }
+    const data = { ...form, nonApprovedHours: parseFloat(form.nonApprovedHours) + parseFloat(addFormHours) }
     axios.put(`http://localhost:3001/forms/byId/${form.id}`, data, {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
@@ -90,6 +90,8 @@ const Form = ({ form, isAdmin }) => {
           {form.status === "rejected" ? "not-approved" : form.status}
         </span>
       </td>
+      <td>{form.wasApproved ? <FaCheck /> : <FaTimes />}</td>
+      <td>{form.wasVerified ? <FaCheckDouble /> : <FaTimes />}</td>
       <td>
         {changeAddHours ? (
           <div className="add-form form-control">
@@ -97,9 +99,10 @@ const Form = ({ form, isAdmin }) => {
             <button className="btn btn-block" onClick={addHours}>Add Hours</button>
           </div>
         ) : (
-          form.hours
+          form.nonApprovedHours
         )}
       </td>
+      <td>{form.verifiedHours}</td>
       <td>
         {form.createdAt.substring(0, 10)} {form.createdAt.substring(11, 19)}
       </td>

@@ -26,6 +26,7 @@ const Registration = () => {
         firstName: "",
         lastName: "",
         gradYear: "",
+        lockerNumber: "",
         student: "",
         password: ""
       };
@@ -34,6 +35,7 @@ const Registration = () => {
         firstName: Yup.string().min(1).required("Your first name is required."),
         lastName: Yup.string().min(1).required("Your last name is required."),
         gradYear: Yup.string().min(4).max(4).required(),
+        lockerNumber: Yup.string().min(2, "If it is a one-digit number, put a '0' in front of it.").max(2).required("Your locker number is required."),
         student: Yup.string()
           .email("Enter a valid email address.")
           .min(9)
@@ -96,6 +98,17 @@ const Registration = () => {
             name="gradYear"
             placeholder="2024"
           />
+          <label>Locker Number: </label>
+          <ErrorMessage
+            name="lockerNumber"
+            component="span"
+            className="errorMessage"
+          />
+          <Field
+            id="registerForm-4"
+            name="lockerNumber"
+            placeholder="23"
+          />
           <label>Student WPI Address: </label>
           <ErrorMessage
             name="student"
@@ -103,7 +116,7 @@ const Registration = () => {
             className="errorMessage"
           />
           <Field
-            id="registerForm-4"
+            id="registerForm-5"
             name="student"
             placeholder="lshilowa@wpi.edu"
           />
@@ -115,7 +128,7 @@ const Registration = () => {
           />
           <Field
             type="password"
-            id="registerForm-5"
+            id="registerForm-6"
             name="password"
             placeholder="Your Password"
           />

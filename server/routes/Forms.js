@@ -88,6 +88,11 @@ router.post("/", validateToken, async (req, res) => {
 router.put("/byId/:id", async (req, res) => {
     const id = req.params.id // get the form id
     const [updated] = await Forms.update(req.body, {where: {id: id }}); // update the exact form
+    if (req.body.status === "approved") await Forms.update({ wasApproved: true}, {where: { id: id } });
+    if (req.body.status === "completed") {
+        const updatedForm = await Forms.findByPk(id);
+        await Forms.update({ wasVerified: true, verifiedHours: updatedForm.nonApprovedHours, nonApprovedHours: 0,}, {where: {id: id}});
+    }
 
     // if it has been updated
     if (updated) {

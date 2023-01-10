@@ -118,6 +118,10 @@ table {
   border-color: black;
 }
 
+img {
+  width: 100%;
+}
+
 .form.comment-container {
   background: #bfd8bd;
 }

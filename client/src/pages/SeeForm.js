@@ -38,6 +38,7 @@ const SeeForm = () => {
         setFormObject(response.data);
         setStudent(response.data.student);
         setPhysicalAddress(!response.data.isOnline);
+        setGetImageURL(response.data.image);
       });
 
     axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
@@ -196,7 +197,7 @@ const SeeForm = () => {
         >
           {closeImage ? "Close Image" : "Get Image"}
         </button>
-        {getImageURL && closeImage && <img src={require("../assets/images/" + getImageURL)} alt="img" />}
+        {getImageURL && <img src={require("../assets/images/" + getImageURL)} alt="img" />}
         <button
           className="btn"
           onClick={() => {

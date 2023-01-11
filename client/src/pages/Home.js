@@ -51,6 +51,7 @@ const Home = () => {
           <th>Verified Hours</th>
           <th>Created Date</th>
           <th>Updated Date</th>
+          <th>Image?</th>
           <th>Actions</th>
           </tr>
         </thead>

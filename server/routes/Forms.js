@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-const { Forms } = require('../models') // the table we are importing
+const { Forms, Users } = require('../models') // the table we are importing
 
 // grabbing all of the forms
 router.get("/", validateToken, async (req, res) => {
@@ -87,11 +87,22 @@ router.post("/", validateToken, async (req, res) => {
 // updating a form
 router.put("/byId/:id", async (req, res) => {
     const id = req.params.id // get the form id
+    const beforeForm = await Forms.findByPk(id);
     const [updated] = await Forms.update(req.body, {where: {id: id }}); // update the exact form
     if (req.body.status === "approved") await Forms.update({ wasApproved: true}, {where: { id: id } });
+    if (req.body.nonApprovedHours) {
+        const currentUser = await Users.findByPk(beforeForm.UserId);
+        await Users.update({ nonApprovedHours: currentUser.nonApprovedHours + req.body.nonApprovedHours - beforeForm.nonApprovedHours, }, { where: {id: currentUser.id}});
+    }
     if (req.body.status === "completed") {
         const updatedForm = await Forms.findByPk(id);
+        const currentUser = await Users.findByPk(beforeForm.UserId);
+        await Users.update({ nonApprovedHours: currentUser.nonApprovedHours - updatedForm.nonApprovedHours, verifiedHours: currentUser.verifiedHours + updatedForm.nonApprovedHours }, { where: {id: currentUser.id}})
+
         await Forms.update({ wasVerified: true, verifiedHours: updatedForm.nonApprovedHours, nonApprovedHours: 0,}, {where: {id: id}});
+    }
+    if (req.body.status === "rejected") {
+        await Forms.update({ wasApproved: false, wasVerified: false, verifiedHours: 0, nonApprovedHours: 0,}, {where: {id: id}});
     }
 
     // if it has been updated
@@ -124,6 +135,9 @@ router.get("/upload/:id", async (req, res) => {
 // delete a form
 router.delete("/:formId", validateToken, async (req, res) => {
     const formId = req.params.formId;
+    const form = await Forms.findByPk(formId);
+    const currentUser = await Users.findByPk(form.UserId);
+    await Users.update({ nonApprovedHours: currentUser.nonApprovedHours - form.nonApprovedHours, verifiedHours: currentUser.verifiedHours - form.verifiedHours, }, { where: {id: currentUser.id}});
 
     Forms.destroy({where: {
         id: formId,

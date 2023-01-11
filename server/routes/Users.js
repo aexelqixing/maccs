@@ -80,10 +80,10 @@ router.get("/", validateToken, async (req, res) => {
   } else {
       // if the user is an admin, show all users in descending order of last name
       if (req.user.isAdmin) {
-          const listOfUsers = await Users.findAll({order: [['lastName', 'DESC']]})
+          const listOfUsers = await Users.findAll({order: [['lockerNumber', 'ASC']]})
           res.json(listOfUsers)
       } 
-      // otherwise, show only forms for the student in descending order of updated
+      // otherwise, error
       else {
           res.json({error: "User is not admin. You cannot access these users. "})
       }

@@ -40,16 +40,20 @@ const SeeUsers = () => {
       )}
       <table>
         <thead>
+          <tr>
           <th>Student WPI Address</th>
           <th>Student Name</th>
           <th>Graduation Year</th>
           <th>Verified Hours</th>
           <th>Unverified Hours</th>
           <th>Actions</th>
+          </tr>
         </thead>
+        <tbody>
         {listOfUsers.map((user, key) => {
           return <Student key={key} user={user} />
         })}
+        </tbody>
       </table>
     </>
   );

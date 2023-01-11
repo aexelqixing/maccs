@@ -47,7 +47,6 @@ const Form = ({ form, isAdmin }) => {
       })
       .then((response) => {
         console.log(response.data);
-        navigate(`/home`);
         window.location.reload();
       });
   };
@@ -60,7 +59,6 @@ const Form = ({ form, isAdmin }) => {
       },
     }).then((response) => {
       console.log(response.data);
-        navigate(`/home`);
         window.location.reload();
     })
   }
@@ -109,6 +107,7 @@ const Form = ({ form, isAdmin }) => {
       <td>
         {form.updatedAt.substring(0, 10)} {form.updatedAt.substring(11, 19)}
       </td>
+      <td>{form.image ? "Click pencil to see image." : <FaTimes />}</td>
       <td className="actions">
         {changeStatus ? (
           <div>

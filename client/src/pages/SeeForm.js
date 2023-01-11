@@ -39,6 +39,7 @@ const SeeForm = () => {
         setStudent(response.data.student);
         setPhysicalAddress(!response.data.isOnline);
         setGetImageURL(response.data.image);
+        if (!getImageURL) setCloseImage(true);
       });
 
     axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
@@ -83,7 +84,7 @@ const SeeForm = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         navigate(`/home`);
       });
   };
@@ -149,7 +150,7 @@ const SeeForm = () => {
     axios
       .put(`http://localhost:3001/forms/upload/${id}`, formData)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         window.location.reload();
       });
   }
@@ -183,7 +184,7 @@ const SeeForm = () => {
         <p><b>Business Name:</b> {form.businessName}</p>
         <p><b>Location: </b> {form.isOnline ? "Online" : form.streetAddress + ", " + form.city + ", " + form.state + " " + form.zipcode} </p>
         <p><b>High Needs:</b> {form.isHighNeeds ? "Yes" : "No"}</p>
-        <p><b>Hours:</b> {form.hours}</p>
+        <p><b>Unconfirmed Hours:</b> {form.nonApprovedHours} | <b>Verified Hours: </b> {form.verifiedHours}</p>
         <input type="file" name="image" accept="image/*" multiple={false} onChange={(e) => {setImage(e.target.files[0]); setImageName(e.target.files[0].name)}}/>
         <button
           className="btn"
@@ -197,7 +198,7 @@ const SeeForm = () => {
         >
           {closeImage ? "Close Image" : "Get Image"}
         </button>
-        {getImageURL && <img src={require("../assets/images/" + getImageURL)} alt="img" />}
+        {getImageURL && closeImage && <img src={require("../assets/images/" + getImageURL)} alt="img" />}
         <button
           className="btn"
           onClick={() => {

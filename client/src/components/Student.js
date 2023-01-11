@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Student = ({ user }) => {
   const [listOfForms, setListOfForms] = useState([]);
@@ -20,33 +21,16 @@ const Student = ({ user }) => {
       });
   }, []);
 
-  const updateHours = () => {
-    listOfForms.map((form) => {
-      if (form.status === "completed") {
-        setCompletedHours(completedHours + form.hours);
-      }
-      if (form.status === "approved") {
-        setNotVerifiedHours(notVerifiedHours + form.hours);
-      }
-    });
-    setUpdateOnce(false);
-  };
-
   return (
-    <tbody>
-      <td>{user.student}</td>
+    <tr>
+      <td><Link to={`/profile/${user.id}`}>{user.student}</Link></td>
       <td>{user.firstName + " " + user.lastName}</td>
       <td>{user.gradYear}</td>
-      <td>{completedHours}</td>
-      <td>{notVerifiedHours}</td>
+      <td>{user.verifiedHours}</td>
+      <td>{user.nonApprovedHours}</td>
       <td>
-        {updateHoursOnce && (
-          <button className="btn" onClick={updateHours}>
-            Update Hours
-          </button>
-        )}
       </td>
-    </tbody>
+    </tr>
   );
 };
 

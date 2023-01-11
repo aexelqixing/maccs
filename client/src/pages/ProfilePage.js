@@ -29,18 +29,6 @@ const ProfilePage = () => {
       });
   }, []);
 
-  const updateHours = () => {
-    listOfForms.map((form) => {
-        if (form.status === "completed") {
-          setCompletedHours(completedHours + form.hours);
-        }
-        if (form.status === "approved") {
-          setNotVerifiedHours(notVerifiedHours + form.hours);
-        }
-      });
-      setUpdateOnce(false);
-  }
-
   return (
     <>
       <div className="form">
@@ -48,13 +36,7 @@ const ProfilePage = () => {
         <p>
           <b>Graduation Year:</b> {user.gradYear}
         </p>
-        <p>Verfied Hours: {completedHours} | Not Verified Hours: {notVerifiedHours}</p>
-        {updateHoursOnce && <button
-          className="btn"
-          onClick={updateHours}
-        >
-          Update Hours
-        </button>}
+        <p><b>Verified Hours:</b> {user.verifiedHours} | <b>Not Verified Hours:</b> {user.nonApprovedHours}</p>
       </div>
       <table>
         <thead>
@@ -62,9 +44,13 @@ const ProfilePage = () => {
           <th>Student WPI Address</th>
           <th>Proposal Name</th>
           <th>Status</th>
-          <th>Hours</th>
+          <th>Approved?</th>
+          <th>Verified?</th>
+          <th>Unconfirmed Hours</th>
+          <th>Verified Hours</th>
           <th>Created Date</th>
           <th>Updated Date</th>
+          <th>Image?</th>
           <th>Actions</th>
           </tr>
         </thead>

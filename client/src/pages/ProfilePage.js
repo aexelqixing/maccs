@@ -9,9 +9,6 @@ const ProfilePage = () => {
   const { authState } = useContext(AuthContext);
   const [user, setUser] = useState({});
   const [listOfForms, setListOfForms] = useState([]);
-  const [completedHours, setCompletedHours] = useState(0);
-  const [notVerifiedHours, setNotVerifiedHours] = useState(0);
-  const [updateHoursOnce, setUpdateOnce] = useState(true);
 
   useEffect(() => {
     axios.get(`http://localhost:3001/auth/basicInfo/${id}`).then((response) => {
@@ -27,6 +24,7 @@ const ProfilePage = () => {
       .then((response) => {
         setListOfForms(response.data);
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

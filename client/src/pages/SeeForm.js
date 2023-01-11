@@ -45,6 +45,7 @@ const SeeForm = () => {
     axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
       setComments(response.data);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initialValues = {
@@ -102,7 +103,7 @@ const SeeForm = () => {
         .then(() => {
           setComments(
             comments.filter((val) => {
-              return val.id != id;
+              return val.id !== id;
             })
           );
         });

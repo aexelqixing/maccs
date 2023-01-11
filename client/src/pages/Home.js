@@ -27,6 +27,7 @@ const Home = () => {
         setListOfForms(response.data);
         console.log(listOfForms);
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -4,12 +4,13 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate, Link } from 'react-router-dom';
 import * as Yup from "yup";
 import axios from "axios";
+import PORT from '../config';
 
 const Registration = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:3001/forms", {
+    axios.get(`${PORT}/forms`, {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
       },
@@ -47,7 +48,7 @@ const Registration = () => {
       });
 
       const onSubmit = (data) => {
-        axios.post("http://localhost:3001/auth", data).then((response) => {
+        axios.post(`${PORT}/auth`, data).then((response) => {
           if (response.data.error) {
             alert(response.data.error);
             return;

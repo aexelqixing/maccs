@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
 import { FaTimes } from "react-icons/fa";
+import PORT from "../config";
 
 const SeeForm = () => {
   let { id } = useParams();
@@ -24,7 +25,7 @@ const SeeForm = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/forms/byId/${id}`, {
+      .get(`${PORT}/forms/byId/${id}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -42,7 +43,7 @@ const SeeForm = () => {
         if (!getImageURL) setCloseImage(true);
       });
 
-    axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
+    axios.get(`${PORT}/comments/${id}`).then((response) => {
       setComments(response.data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,7 +80,7 @@ const SeeForm = () => {
 
   const onSubmit = (data) => {
     axios
-      .put(`http://localhost:3001/forms/byId/${id}`, data, {
+      .put(`${PORT}/forms/byId/${id}`, data, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -97,7 +98,7 @@ const SeeForm = () => {
       )
     ) {
       axios
-        .delete(`http://localhost:3001/comments/${id}`, {
+        .delete(`${PORT}/comments/${id}`, {
           headers: { accessToken: localStorage.getItem("accessToken") },
         })
         .then(() => {
@@ -118,7 +119,7 @@ const SeeForm = () => {
 
     axios
       .post(
-        "http://localhost:3001/comments",
+        `${PORT}/comments`,
         {
           user: student,
           commentBody: newComment,
@@ -149,7 +150,7 @@ const SeeForm = () => {
     formData.append("filename", imageName);
 
     axios
-      .put(`http://localhost:3001/forms/upload/${id}`, formData)
+      .put(`${PORT}/forms/upload/${id}`, formData)
       .then((response) => {
         // console.log(response.data);
         window.location.reload();
@@ -157,7 +158,7 @@ const SeeForm = () => {
   }
 
   const getImage = () => {
-    axios.get(`http://localhost:3001/forms/upload/${id}`, {
+    axios.get(`${PORT}/forms/upload/${id}`, {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
       },

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import Form from "../components/Form";
 import Header from "../components/Header";
+import PORT from "../config";
 
 const Home = () => {
   const [listOfForms, setListOfForms] = useState([]);
@@ -13,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/forms", {
+      .get(`${PORT}/forms`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },

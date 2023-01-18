@@ -3,6 +3,7 @@ import { FaPencilAlt, FaTrashAlt, FaCheck, FaCheckDouble, FaTimes } from "react-
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import PORT from "../config";
 
 const Form = ({ form, isAdmin }) => {
   const [changeStatus, setChangeStatus] = useState(false);
@@ -40,7 +41,7 @@ const Form = ({ form, isAdmin }) => {
   const onSubmitStatusChange = () => {
     const data = { ...form, status: formStatus };
     axios
-      .put(`http://localhost:3001/forms/byId/${form.id}`, data, {
+      .put(`${PORT}/forms/byId/${form.id}`, data, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -53,7 +54,7 @@ const Form = ({ form, isAdmin }) => {
 
   const addHours = () => {
     const data = { ...form, nonApprovedHours: parseFloat(form.nonApprovedHours) + parseFloat(addFormHours) }
-    axios.put(`http://localhost:3001/forms/byId/${form.id}`, data, {
+    axios.put(`${PORT}/forms/byId/${form.id}`, data, {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
       },
@@ -70,7 +71,7 @@ const Form = ({ form, isAdmin }) => {
       )
     ) {
       axios
-        .delete(`http://localhost:3001/forms/${id}`, {
+        .delete(`${PORT}/forms/${id}`, {
           headers: { accessToken: localStorage.getItem("accessToken") },
         })
         .then(() => {

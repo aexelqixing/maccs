@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
 import Form from "../components/Form";
+import PORT from "../config";
 
 const ProfilePage = () => {
   let { id } = useParams();
@@ -11,12 +12,12 @@ const ProfilePage = () => {
   const [listOfForms, setListOfForms] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/auth/basicInfo/${id}`).then((response) => {
+    axios.get(`${PORT}/auth/basicInfo/${id}`).then((response) => {
       setUser(response.data);
     });
 
     axios
-      .get(`http://localhost:3001/forms/byUserId/${id}`, {
+      .get(`${PORT}/forms/byUserId/${id}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -34,7 +35,7 @@ const ProfilePage = () => {
         <p>
           <b>Graduation Year:</b> {user.gradYear}
         </p>
-        <p><b>Verified Hours:</b> {user.verifiedHours} | <b>Not Verified Hours:</b> {user.nonApprovedHours}</p>
+        <p><b>Not Verified Hours:</b> {user.nonApprovedHours} | <b>Verified Hours:</b> {user.verifiedHours}</p>
       </div>
       <table>
         <thead>

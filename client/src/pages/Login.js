@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../helpers/AuthContext';
+import PORT from '../config';
 
 const Login = () => {
     const [student, setStudent] = useState("");
@@ -10,7 +11,7 @@ const Login = () => {
     let navigate = useNavigate();
 
     useEffect(() => {
-      axios.get("http://localhost:3001/forms", {
+      axios.get(`${PORT}/forms`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -29,7 +30,7 @@ const Login = () => {
         return
     }
         const data = { student: student, password: password }
-        axios.post("http://localhost:3001/auth/login", data).then((response) => {
+        axios.post(`${PORT}/auth/login`, data).then((response) => {
           if (response.data.error) {
             alert(response.data.error);
             return;

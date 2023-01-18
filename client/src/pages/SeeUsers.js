@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import Header from "../components/Header";
 import Student from "../components/Student";
+import PORT from "../config";
 
 const SeeUsers = () => {
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -13,7 +14,7 @@ const SeeUsers = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth", {
+      .get(`${PORT}/auth`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },

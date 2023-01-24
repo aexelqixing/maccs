@@ -24,7 +24,7 @@ const Login = () => {
       });
     }, []);
 
-    const login= () => {
+    const login = () => {
       if (!student || !password) {
         alert('Please input your username and password. ')
         return
@@ -49,12 +49,18 @@ const Login = () => {
           window.location.reload();
         })
     }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        login();
+      }
+    }
   return (
     <div className="add-form form-control">
         <label>Username (WPI Email Address) </label>
       <input type="text" onChange={(event) => {setStudent(event.target.value);}}/>
       <label>Password </label>
-      <input type="password" onChange={(event) => {setPassword(event.target.value);}}/>
+      <input type="password" onChange={(event) => {setPassword(event.target.value);}} onKeyDown={handleKeyDown}/>
 
       <button className="btn btn-block" onClick={login} >Login</button>
       <p>Not registered? Click <Link to="/registration">here.</Link></p>

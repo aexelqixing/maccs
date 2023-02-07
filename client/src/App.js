@@ -1,4 +1,9 @@
-import "./index.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css'
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/Button';
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import AddForm from "./pages/AddForm";
@@ -7,6 +12,7 @@ import Footer from "./components/Footer";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import ProfilePage from "./pages/ProfilePage";
+import Test from "./pages/Test";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -54,28 +60,39 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className="bg-dark d-flex flex-column min-vh-100">
         <AuthContext.Provider value={{ authState, setAuthState }}>
           <Router>
-            <div className="navbar">
-              {!authState.status ? (
+            <Navbar className="bg-mams-red">
+              <Container>
+                <Navbar.Brand className="text-white" href="/">MACCS</Navbar.Brand>
+                <Navbar.Collapse>
+                  <Nav className="me-auto">
+                  {!authState.status ? (
                 <>
-                  <Link to="/"> Login </Link>
-                  <Link to="/registration"> Registration </Link>
+                  <Nav.Link className="text-light" href="/"> Login </Nav.Link>
+                  <Nav.Link className="text-light" href="/registration"> Registration </Nav.Link>
                 </>
               ) : (
                 <>
-                  <h3>{authState.username}</h3>
-                  <Link to="/home"> Home </Link>
-                  <Link to="/addForm"> Add Form </Link>
-                  {authState.isAdmin && <Link to="/seeUsers">Users</Link>}
-                  <button className="btn-top" onClick={logout}>
-                    Logout
-                  </button>
+                  <Nav.Link className="text-light" href="/home"> Home </Nav.Link>
+                  <Nav.Link className="text-light" href="/addForm"> Add Form </Nav.Link>
+                  {authState.isAdmin && <><Nav.Link className="text-light" href="/seeUsers">Users</Nav.Link><Nav.Link className="text-light" href="/testingPurposes">Testing</Nav.Link></>}
+                  <Button variant="danger ml-5" onClick={logout}>Logout</Button>
                 </>
               )}
-            </div>
-            <div className="container">
+                  </Nav>
+                </Navbar.Collapse>
+
+                <Navbar.Text className="justify-content-end">
+                  <Navbar.Text className="text-white">
+                    {authState.username}
+                  </Navbar.Text>
+                </Navbar.Text>
+              </Container>
+            </Navbar>
+
+            <div className="my-auto p-5">
               <Routes>
                 <Route path="/registration" exact element={<Registration />} />
                 <Route path="/addForm" exact element={<AddForm />} />
@@ -84,13 +101,15 @@ function App() {
                 <Route path="/home" exact element={<Home />} />
                 <Route path="/profile/:id" exact element={<ProfilePage />}/>
                 <Route path="/seeUsers" exact element={<SeeUsers />}/>
+                <Route path="/testingPurposes" exact element={<Test />}/>
                 <Route path="*" exact element={<PageNotFound />}/>
               </Routes>
             </div>
           </Router>
         </AuthContext.Provider>
+
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }

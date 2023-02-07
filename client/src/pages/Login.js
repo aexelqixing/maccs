@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react'
 import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../helpers/AuthContext';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import PORT from '../config';
 
 const Login = () => {
@@ -56,15 +58,27 @@ const Login = () => {
       }
     }
   return (
-    <div className="add-form form-control">
-        <label>Username (WPI Email Address) </label>
-      <input type="text" onChange={(event) => {setStudent(event.target.value);}}/>
-      <label>Password </label>
-      <input type="password" onChange={(event) => {setPassword(event.target.value);}} onKeyDown={handleKeyDown}/>
+    <>
+    <Form className="p-3 m-5 bg-light rounded">
+      <Form.Group className="mb-3" controlId="username">
+        <Form.Label>Username (WPI Email Address)</Form.Label>
+        <Form.Control type="text" placeholder="test@wpi.edu" onChange={(event) => {setStudent(event.target.value);}}/>
 
-      <button className="btn btn-block" onClick={login} >Login</button>
-      <p>Not registered? Click <Link to="/registration">here.</Link></p>
-    </div>
+        <Form.Text className="text-muted">
+          We'll never share your email with anyone else.
+        </Form.Text>
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="password">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="password" onChange={(event) => {setPassword(event.target.value);}} onKeyDown={handleKeyDown}/>
+      </Form.Group>
+
+      <Button variant="primary" onClick={login}>Login</Button>
+
+      <p className="mt-3">Not registered? Click <Link to="/registration">here.</Link></p>
+    </Form>
+    </>
   )
 }
 

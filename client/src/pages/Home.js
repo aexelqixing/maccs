@@ -28,41 +28,43 @@ const Home = () => {
         setListOfForms(response.data);
         console.log(listOfForms);
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      {authState.isAdmin ? (
-        <Header
-          greeting={"ADMIN VIEW FOR"}
-          user={authState.firstName + " " + authState.lastName}
-        />
-      ) : (
-        <Header user={authState.firstName + " " + authState.lastName} />
-      )}
-      <table>
-        <thead>
-          <tr>
-          <th>Student WPI Address</th>
-          <th>Proposal Name</th>
-          <th>Status</th>
-          <th>Approved?</th>
-          <th>Verified?</th>
-          <th>Unconfirmed Hours</th>
-          <th>Verified Hours</th>
-          <th>Created Date</th>
-          <th>Updated Date</th>
-          <th>Image?</th>
-          <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-        {listOfForms.map((form, key) => {
-          return <Form key={key} isAdmin={authState.isAdmin} form={form} />;
-        })}
-        </tbody>
-      </table>
+      <div className="bg-light p-5 rounded">
+        {authState.isAdmin ? (
+          <Header
+            greeting={"ADMIN VIEW FOR"}
+            user={authState.firstName + " " + authState.lastName}
+          />
+        ) : (
+          <Header user={authState.firstName + " " + authState.lastName} />
+        )}
+        <table className="table table-hover bg-light">
+          <thead>
+            <tr>
+              <th>Student WPI Address</th>
+              <th>Proposal Name</th>
+              <th>Status</th>
+              <th>Approved?</th>
+              <th>Verified?</th>
+              <th>Unconfirmed Hours</th>
+              <th>Verified Hours</th>
+              <th>Created Date</th>
+              <th>Updated Date</th>
+              <th>Image?</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listOfForms.map((form, key) => {
+              return <Form key={key} isAdmin={authState.isAdmin} form={form} />;
+            })}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };

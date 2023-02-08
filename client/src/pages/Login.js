@@ -59,7 +59,7 @@ const Login = () => {
     }
   return (
     <>
-    <Form className="p-3 m-5 bg-light rounded">
+    <Form className="p-3 w-50 mx-auto bg-light rounded">
       <Form.Group className="mb-3" controlId="username">
         <Form.Label>Username (WPI Email Address)</Form.Label>
         <Form.Control type="text" placeholder="test@wpi.edu" onChange={(event) => {setStudent(event.target.value);}}/>

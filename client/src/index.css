@@ -233,6 +233,7 @@ img {
   flex: 2;
   height: 20px;
 }
+*/
 
 .errorMessage {
   margin: 100px 5px;
@@ -241,4 +242,4 @@ img {
   border-color: #000;
   background-color: #f08080;
   color: #660708;
-}  */
+} 

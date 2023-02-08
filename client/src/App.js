@@ -65,7 +65,7 @@ function App() {
           <Router>
             <Navbar className="bg-mams-red">
               <Container>
-                <Navbar.Brand className="text-white" href="/">MACCS</Navbar.Brand>
+                <Navbar.Brand className="text-white" href="/"><p className="display-6 m-0">MACCS</p></Navbar.Brand>
                 <Navbar.Collapse>
                   <Nav className="me-auto">
                   {!authState.status ? (
@@ -78,16 +78,17 @@ function App() {
                   <Nav.Link className="text-light" href="/home"> Home </Nav.Link>
                   <Nav.Link className="text-light" href="/addForm"> Add Form </Nav.Link>
                   {authState.isAdmin && <><Nav.Link className="text-light" href="/seeUsers">Users</Nav.Link><Nav.Link className="text-light" href="/testingPurposes">Testing</Nav.Link></>}
-                  <Button variant="danger ml-5" onClick={logout}>Logout</Button>
                 </>
               )}
                   </Nav>
                 </Navbar.Collapse>
 
                 <Navbar.Text className="justify-content-end">
-                  <Navbar.Text className="text-white">
+                  <Navbar.Text className="text-white m-3">
                     {authState.username}
                   </Navbar.Text>
+                  {authState.status && 
+                  <Button variant="danger ml-5" onClick={logout}>Logout</Button>}
                 </Navbar.Text>
               </Container>
             </Navbar>

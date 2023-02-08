@@ -32,7 +32,8 @@ const SeeUsers = () => {
 
   return (
     <>
-      {authState.isAdmin ? (
+    <div className="bg-light p-5 rounded">
+    {authState.isAdmin ? (
         <Header
           greeting={"ALL CURRENT USERS FOR "}
           user={authState.firstName + " " + authState.lastName}
@@ -40,7 +41,7 @@ const SeeUsers = () => {
       ) : (
         <Header user={authState.firstName + " " + authState.lastName} />
       )}
-      <table>
+      <table className="table table-hover bg-light">
         <thead>
           <tr>
           <th>Student WPI Address</th>
@@ -57,6 +58,7 @@ const SeeUsers = () => {
         })}
         </tbody>
       </table>
+    </div>
     </>
   );
 };

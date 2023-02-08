@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Button } from 'react-bootstrap';
 import { useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
 import axios from "axios";
@@ -65,74 +66,80 @@ const Registration = () => {
   };
 
   return (
-    <div className="add-form">
-      <Formik
-        initialValues={initialValues}
+    <>
+      <Formik initialValues={initialValues}
         onSubmit={onSubmit}
-        validationSchema={validationSchema}
-      >
-        <Form className="form-control">
-          <label>First Name: </label>
+        validationSchema={validationSchema}>
+          <>
+          <div className="m-5">
           <ErrorMessage
             name="firstName"
             component="span"
-            className="errorMessage"
+            className="alert alert-danger"
           />
-          <Field id="registerForm-1" name="firstName" placeholder="Lamitha" />
-          <label>Last Name: </label>
           <ErrorMessage
             name="lastName"
             component="span"
-            className="errorMessage"
+            className="alert alert-danger"
           />
-          <Field id="registerForm-2" name="lastName" placeholder="Shilowa" />
-          <label>Graduation Year: </label>
           <ErrorMessage
             name="gradYear"
             component="span"
-            className="errorMessage"
+            className="alert alert-danger"
           />
-          <Field id="registerForm-3" name="gradYear" placeholder="2024" />
-          <label>Locker Number: </label>
           <ErrorMessage
             name="lockerNumber"
             component="span"
-            className="errorMessage"
+            className="alert alert-danger"
           />
-          <Field id="registerForm-4" name="lockerNumber" placeholder="23" />
-          <label>Student WPI Address: </label>
           <ErrorMessage
             name="student"
             component="span"
-            className="errorMessage"
+            className="alert alert-danger"
           />
-          <Field
-            id="registerForm-5"
-            name="student"
-            placeholder="lshilowa@wpi.edu"
-          />
-          <label>Password: </label>
           <ErrorMessage
             name="password"
             component="span"
-            className="errorMessage"
+            className="alert alert-danger"
           />
-          <Field
-            type="password"
-            id="registerForm-6"
-            name="password"
-            placeholder="Your Password"
-          />
-          <button className="btn btn-block" type="submit">
-            {" "}
-            Register{" "}
-          </button>
-        </Form>
+          </div>
+          <Form className="p-3 w-75 mx-auto bg-light rounded">
+            <div className="mt-2">
+              <label className="form-label">First Name</label>
+              <Field className="form-control" id="registerForm-1" name="firstName" placeholder="Lamitha" />
+            </div>
+
+            <div className="mt-2">
+              <label className="form-label">Last Name</label>
+              <Field className="form-control" id="registerForm-2" name="lastName" placeholder="Shilowa" />
+            </div>
+
+            <div className="mt-2">
+              <label className="form-label">Graduation Year</label>
+              <Field className="form-control" id="registerForm-3" name="gradYear" placeholder="2024" />
+            </div>
+
+            <div className="mt-2">
+              <label className="form-label">Locker Number</label>
+              <Field className="form-control" id="registerForm-4" name="lockerNumber" placeholder="23" />
+            </div>
+
+            <div className="mt-2">
+              <label className="form-label">Student WPI Address</label>
+              <Field className="form-control" id="registerForm-5" name="student" placeholder="lshilowa@wpi.edu" />
+            </div>
+
+            <div className="mt-2">
+              <label className="form-label">Password</label>
+              <Field className="form-control" type="password" id="registerForm-6" name="password" placeholder="Your Password" />
+            </div>
+
+            <Button variant="primary" type="submit" className="mt-2">Register</Button>
+            <p className="mt-3">Already registered? Login <Link to="/">here.</Link></p>
+          </Form>
+          </>
       </Formik>
-      <p>
-        Already registered? Login <Link to="/">here.</Link>
-      </p>
-    </div>
+    </>
   );
 };
 

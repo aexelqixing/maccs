@@ -8,6 +8,17 @@
 
 .bg-isabelline {background-color: #f2e9e4;}
 
+.btn-mams-red {
+  background-color: #7e212b;
+  color: #fff;
+  border: none;
+}
+
+.btn-mams-red:hover {
+  background-color: #fff;
+  color: black;
+}
+
 /*
 .container {
   max-width: 1000px;

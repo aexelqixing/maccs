@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
 import Form from "../components/Form";
@@ -10,10 +10,16 @@ const ProfilePage = () => {
   const { authState } = useContext(AuthContext);
   const [user, setUser] = useState({});
   const [listOfForms, setListOfForms] = useState([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`${PORT}/auth/basicInfo/${id}`).then((response) => {
-      setUser(response.data);
+      if (!response.data || response.data.error) {
+        navigate(`/`);
+        // alert(response.data.error);
+        return;
+      }
+        setUser(response.data);
     });
 
     axios
@@ -23,6 +29,11 @@ const ProfilePage = () => {
         },
       })
       .then((response) => {
+        if (response.data.error) {
+          navigate(`/`);
+          // alert(response.data.error);
+          return;
+        }
         setListOfForms(response.data);
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -30,14 +41,14 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="form">
+      <div className="bg-light p-4 w-75 mx-auto rounded">
         <h3>{user.firstName + " " + user.lastName}</h3>
         <p>
           <b>Graduation Year:</b> {user.gradYear}
         </p>
         <p><b>Not Verified Hours:</b> {user.nonApprovedHours} | <b>Verified Hours:</b> {user.verifiedHours}</p>
       </div>
-      <table>
+      {authState.isAdmin && <table className="bg-light rounded table table-borderless mx-auto mt-2 mb-0">
         <thead>
           <tr>
           <th>Student WPI Address</th>
@@ -58,7 +69,7 @@ const ProfilePage = () => {
           return <Form key={key} isAdmin={authState.isAdmin} form={form} />;
         })}
         </tbody>
-      </table>
+      </table>}
     </>
   );
 };

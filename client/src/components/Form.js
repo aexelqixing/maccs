@@ -1,5 +1,5 @@
 import React from "react";
-import { FaPencilAlt, FaTrashAlt, FaCheck, FaCheckDouble, FaTimes } from "react-icons/fa";
+import { FaPencilAlt, FaTrashAlt, FaCheck, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
@@ -82,15 +82,15 @@ const Form = ({ form, isAdmin }) => {
 
   return (
     <tr>
-      <td><Link to={`/profile/${form.UserId}`}>{form.student}</Link></td>
+      <td>{isAdmin ? <Link to={`/profile/${form.UserId}`}>{form.student}</Link> : form.student}</td>
       <td>{form.proposalName}</td>
       <td>
         <span className={`status-all ${form.status}`}>
           {form.status === "rejected" ? "not-approved" : form.status}
         </span>
       </td>
-      <td>{form.wasApproved ? <FaCheck /> : <FaTimes />}</td>
-      <td>{form.wasVerified ? <FaCheckDouble /> : <FaTimes />}</td>
+      <td className="text-center">{form.wasApproved ? <FaCheck /> : <FaTimes />}</td>
+      <td className="text-center">{form.wasVerified ? <FaCheck /> : <FaTimes />}</td>
       <td>
         {changeAddHours ? (
           <div className="add-form form-control">
@@ -109,7 +109,7 @@ const Form = ({ form, isAdmin }) => {
         {form.updatedAt.substring(0, 10)} {form.updatedAt.substring(11, 19)}
       </td>
       <td>{form.image ? "Click pencil to see image." : <FaTimes />}</td>
-      <td className="actions">
+      <td className="text-left">
         {changeStatus ? (
           <div>
             <Dropdown

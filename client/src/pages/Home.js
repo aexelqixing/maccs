@@ -45,7 +45,7 @@ const Home = () => {
         <table className="table table-hover bg-light">
           <thead>
             <tr>
-              <th>Student WPI Address</th>
+              <th>Student Email</th>
               <th>Proposal Name</th>
               <th>Status</th>
               <th>Approved?</th>

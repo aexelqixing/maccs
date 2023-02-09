@@ -19,6 +19,7 @@ import axios from "axios";
 import PageNotFound from "./pages/PageNotFound";
 import SeeUsers from "./pages/SeeUsers";
 import PORT from "./config";
+import { FaRegIdBadge } from 'react-icons/fa';
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -60,35 +61,35 @@ function App() {
 
   return (
     <>
-      <div className="bg-dark d-flex flex-column min-vh-100">
+      <div className="bg-grey d-flex flex-column min-vh-100">
         <AuthContext.Provider value={{ authState, setAuthState }}>
           <Router>
             <Navbar className="bg-mams-red">
               <Container>
-                <Navbar.Brand className="text-white" href="/"><p className="display-6 m-0">MACCS</p></Navbar.Brand>
+                <Navbar.Brand className="text-white my-auto" href="/"><p className="display-6 m-0">MACCS</p></Navbar.Brand>
                 <Navbar.Collapse>
                   <Nav className="me-auto">
                   {!authState.status ? (
                 <>
-                  <Nav.Link className="text-light" href="/"> Login </Nav.Link>
-                  <Nav.Link className="text-light" href="/registration"> Registration </Nav.Link>
+                  <Nav.Link className="text-light my-auto" href="/"> Login </Nav.Link>
+                  <Nav.Link className="text-light my-auto" href="/registration"> Registration </Nav.Link>
                 </>
               ) : (
                 <>
-                  <Nav.Link className="text-light" href="/home"> Home </Nav.Link>
-                  <Nav.Link className="text-light" href="/addForm"> Add Form </Nav.Link>
-                  {authState.isAdmin && <><Nav.Link className="text-light" href="/seeUsers">Users</Nav.Link><Nav.Link className="text-light" href="/testingPurposes">Testing</Nav.Link></>}
+                  <Nav.Link className="text-light my-auto" href="/home"> Home </Nav.Link>
+                  <Nav.Link className="text-light my-auto" href="/addForm"> Add Form </Nav.Link>
+                  {authState.isAdmin && <><Nav.Link className="text-light my-auto" href="/seeUsers">Users</Nav.Link><Nav.Link className="text-light my-auto" href="/testingPurposes">Testing</Nav.Link></>}
                 </>
               )}
                   </Nav>
                 </Navbar.Collapse>
 
                 <Navbar.Text className="justify-content-end">
-                  <Navbar.Text className="text-white m-3">
-                    {authState.username}
+                  <Navbar.Text className="text-white m-3 my-auto">
+                    <FaRegIdBadge size="28"/> {authState.username}
                   </Navbar.Text>
                   {authState.status && 
-                  <Button variant="danger ml-5" onClick={logout}>Logout</Button>}
+                  <Button variant="danger ml-5 my-auto mx-auto" onClick={logout}>Logout</Button>}
                 </Navbar.Text>
               </Container>
             </Navbar>

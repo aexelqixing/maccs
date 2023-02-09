@@ -1,4 +1,12 @@
-.bg-mams-red { background-color: #7e212b; } /* Put any color you want */
+.bg-mams-red { background-color: #7e212b; } 
+
+.bg-alert-red {background-color: #f7d7da; }
+
+.text-alert-red {color: #6f1c22; }
+
+.bg-grey {background-color: #ced4da;}
+
+.bg-isabelline {background-color: #f2e9e4;}
 
 /*
 .container {

@@ -60,13 +60,14 @@ const Login = () => {
   return (
     <>
     <Form className="p-3 w-50 mx-auto bg-light rounded">
+      <h1 className="text-center">LOGIN</h1>
       <Form.Group className="mb-3" controlId="username">
         <Form.Label>Username (WPI Email Address)</Form.Label>
         <Form.Control type="text" placeholder="test@wpi.edu" onChange={(event) => {setStudent(event.target.value);}}/>
 
-        <Form.Text className="text-muted">
+        {/* <Form.Text className="text-muted">
           We'll never share your email with anyone else.
-        </Form.Text>
+        </Form.Text> */}
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="password">
@@ -74,9 +75,11 @@ const Login = () => {
         <Form.Control type="password" placeholder="password" onChange={(event) => {setPassword(event.target.value);}} onKeyDown={handleKeyDown}/>
       </Form.Group>
 
-      <Button variant="primary" onClick={login}>Login</Button>
+      <div className="d-grid">
+      <Button className="btn btn-secondary btn-lg btn-block" onClick={login}>Login</Button>
+      </div>
 
-      <p className="mt-3">Not registered? Click <Link to="/registration">here.</Link></p>
+      <div className="d-flex justify-content-center"><p className="mt-3">Not registered? <Link to="/registration">Create an account.</Link></p></div>
     </Form>
     </>
   )

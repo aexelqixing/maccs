@@ -19,7 +19,7 @@ const SeeForm = () => {
   const { authState } = useContext(AuthContext);
   const [image, setImage] = useState();
   const [imageName, setImageName] = useState("");
-  const [getImageURL, setGetImageURL] = useState('');
+  const [getImageURL, setGetImageURL] = useState("");
   const [closeImage, setCloseImage] = useState(false);
   let navigate = useNavigate();
 
@@ -149,58 +149,127 @@ const SeeForm = () => {
     formData.append("image", image);
     formData.append("filename", imageName);
 
-    axios
-      .put(`${PORT}/forms/upload/${id}`, formData)
-      .then((response) => {
-        // console.log(response.data);
-        window.location.reload();
-      });
-  }
+    axios.put(`${PORT}/forms/upload/${id}`, formData).then((response) => {
+      // console.log(response.data);
+      window.location.reload();
+    });
+  };
 
   const getImage = () => {
-    axios.get(`${PORT}/forms/upload/${id}`, {
-      headers: {
-        accessToken: localStorage.getItem("accessToken"),
-      },
-    }).then((response) => {
-      setGetImageURL(response.data);
-      console.log(getImageURL);
-    })
+    axios
+      .get(`${PORT}/forms/upload/${id}`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        setGetImageURL(response.data);
+        console.log(getImageURL);
+      });
     setCloseImage(!closeImage);
-  }
+  };
 
   return (
     <>
-      <div className={`form ${form.isHighNeeds ? "highNeeds" : ""}`}>
-        <h3>{form.proposalName}</h3>
-        <p><b>Student WPI Address:</b> {form.student}</p>
-        <p>
-          <b>Created Date:</b>{" "}
-          {form.createdAt ? form.createdAt.substring(0, 10) : "..."}{" "}
-          {form.createdAt ? form.createdAt.substring(11, 19) : ""} |{" "}
-          <b>Updated Date:</b>{" "}
-          {form.updatedAt ? form.updatedAt.substring(0, 10) : "..."}{" "}
-          {form.updatedAt ? form.createdAt.substring(11, 19) : ""}
-        </p>
-        <p><b>Description:</b> {form.proposalDescription}</p>
-        <p><b>Business Name:</b> {form.businessName}</p>
-        <p><b>Location: </b> {form.isOnline ? "Online" : form.streetAddress + ", " + form.city + ", " + form.state + " " + form.zipcode} </p>
-        <p><b>High Needs:</b> {form.isHighNeeds ? "Yes" : "No"}</p>
-        <p><b>Unconfirmed Hours:</b> {form.nonApprovedHours} | <b>Verified Hours: </b> {form.verifiedHours}</p>
-        <input type="file" name="image" accept="image/*" multiple={false} onChange={(e) => {setImage(e.target.files[0]); setImageName(e.target.files[0].name)}}/>
-        <button
-          className="btn"
-          onClick={imageHandler}
-        >
+      <div className="bg-light p-4 w-75 mx-auto rounded">
+        <h1 className="">{form.proposalName}</h1>
+        <div className="bg-isabelline p-4 mt-4 rounded">
+          <table className="table table-borderless w-auto mb-0">
+            <tbody>
+              <tr>
+                <th scope="row" className="text-end">
+                  Student Email
+                </th>
+                <td>{form.student}</td>
+              </tr>
+              <tr>
+                <th scope="row" className="text-end">
+                  Created Date
+                </th>
+                <td>
+                  {form.createdAt ? form.createdAt.substring(0, 10) : "..."}{" "}
+                  {form.createdAt ? form.createdAt.substring(11, 19) : ""}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="text-end">
+                  Updated Date
+                </th>
+                <td>
+                  {form.updatedAt ? form.updatedAt.substring(0, 10) : "..."}{" "}
+                  {form.updatedAt ? form.createdAt.substring(11, 19) : ""}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="text-end">
+                  Description
+                </th>
+                <td>{form.proposalDescription}</td>
+              </tr>
+              <tr>
+                <th scope="row" className="text-end">
+                  Business Name
+                </th>
+                <td>{form.businessName}</td>
+              </tr>
+              <tr>
+                <th scope="row" className="text-end">
+                  Location
+                </th>
+                <td>{form.isOnline
+              ? "Online"
+              : form.streetAddress +
+                ", " +
+                form.city +
+                ", " +
+                form.state +
+                " " +
+                form.zipcode}</td>
+              </tr>
+              <tr>
+                <th scope="row" className="text-end">
+                  High Needs
+                </th>
+                <td>{form.isHighNeeds ? "Yes" : "No"}</td>
+              </tr>
+              <tr>
+                <th scope="row" className="text-end">
+                  Unconfirmed Hours
+                </th>
+                <td>{form.nonApprovedHours}</td>
+              </tr>
+              <tr>
+                <th scope="row" className="text-end">
+                  Verified Hours
+                </th>
+                <td>{form.verifiedHours}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <input
+          type="file"
+          name="image"
+          accept="image/*"
+          multiple={false}
+          onChange={(e) => {
+            setImage(e.target.files[0]);
+            setImageName(e.target.files[0].name);
+          }}
+        />
+        <button className="btn" onClick={imageHandler}>
           Submit
         </button>
-        <button
-          className="btn"
-          onClick={getImage}
-        >
+        <button className="btn" onClick={getImage}>
           {closeImage ? "Close Image" : "Get Image"}
         </button>
-        {getImageURL && closeImage && <img src={require("../assets/images/" + getImageURL)} alt="img" />}
+        {getImageURL && closeImage && (
+          <img
+            className="img-fluid"
+            src={require("../assets/images/" + getImageURL)}
+            alt="img"
+          />
+        )}
         <button
           className="btn"
           onClick={() => {

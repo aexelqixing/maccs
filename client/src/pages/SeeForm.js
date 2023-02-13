@@ -7,6 +7,7 @@ import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
 import { FaTimes } from "react-icons/fa";
 import PORT from "../config";
+import { Button, Col, Row } from "react-bootstrap";
 
 const SeeForm = () => {
   let { id } = useParams();
@@ -59,6 +60,7 @@ const SeeForm = () => {
     state: form.state,
     zipcode: form.zipcode,
     isOnline: form.isOnline,
+    urlLink: form.urlLink,
     isHighNeeds: form.isHighNeeds,
   };
 
@@ -87,7 +89,7 @@ const SeeForm = () => {
       })
       .then((response) => {
         // console.log(response.data);
-        navigate(`/home`);
+        window.location.reload();
       });
   };
 
@@ -172,8 +174,8 @@ const SeeForm = () => {
   return (
     <>
       <div className="bg-light p-4 w-75 mx-auto rounded">
-        <h1 className="">{form.proposalName}</h1>
-        <div className="bg-isabelline p-4 mt-4 rounded">
+        <h1 className="m-0 p-0">{form.proposalName} <span className="badge bg-secondary m-0 pb-1 pt-1">{form.status}</span></h1>
+        <div className="bg-isabelline p-4 mt-3 rounded">
           <table className="table table-borderless w-auto mb-0">
             <tbody>
               <tr>
@@ -247,7 +249,173 @@ const SeeForm = () => {
             </tbody>
           </table>
         </div>
-        <input
+        {form.status !== "completed" && <Button
+          variant="warning mt-3 mr-3 mb-3"
+          onClick={() => {
+            setEditForm(!editForm);
+          }}
+        >
+          {" "}
+          {editForm ? "Close Editing" : "Edit Form"}{" "}
+        </Button>}
+        {editForm && (
+          <Formik
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validationSchema={validationSchema}
+        >
+          <Form className="form p-3 w-75 mx-auto bg-light rounded">
+          <h1 className="text-center">EDIT COMMUNITY SERVICE FORM</h1>
+            <Row>
+              <Col>
+                <label className="form-label">Proposal Name: </label>
+                <ErrorMessage
+                  name="proposalName"
+                  component="span"
+                  className="p-1 bg-alert-red text-alert-red rounded m-3"
+                />
+                <Field
+                  id="inputCreateForm"
+                  name="proposalName"
+                  placeholder="Doing Your STEM Project"
+                  className="form-control"
+                />
+              </Col>
+              <Col>
+                <label className="form-label">Business Name: </label>
+                <ErrorMessage
+                  name="businessName"
+                  component="span"
+                  className="p-1 bg-alert-red text-alert-red rounded m-3"
+                />
+                <Field
+                  id="inputCreateForm"
+                  name="businessName"
+                  placeholder="Mass Academy of Math and Science"
+                  className="form-control"
+                />
+              </Col>
+            </Row>
+            <label className="form-label mt-2">Proposal Description: </label>
+            <ErrorMessage
+              name="proposalDescription"
+              component="span"
+              className="p-1 bg-alert-red text-alert-red rounded m-3"
+            />
+            <Field
+              id="inputCreateForm"
+              name="proposalDescription"
+              placeholder="Making my STEM poster which is quite obviously high needs. "
+              component="textarea"
+              rows="4"
+              className="form-control"
+            />
+            <div className="form-check mt-2">
+              <label className="form-check-label">Is It Online? </label>
+              <ErrorMessage name="isOnline" component="span" />
+              <Field
+                id="inputCreateForm"
+                name="isOnline"
+                type="checkbox"
+                onClick={() => setPhysicalAddress(!physicalAddress)}
+                className="form-check-input"
+              />
+            </div>
+            {physicalAddress ? (
+              <>
+                <div class="form-group">
+                  <label className="form-label mt-2">Street Address: </label>
+                  <Field
+                    id="inputCreateForm"
+                    name="streetAddress"
+                    class="form-control"
+                    placeholder="85 Prescott Street"
+                  />
+                </div>
+                <Row>
+                  <Col className="col-md-6">
+                    <label className="form-label mt-2">City: </label>
+                    <Field
+                      id="inputCreateForm"
+                      name="city"
+                      placeholder="Worcester"
+                      class="form-control"
+                    />
+                  </Col>
+                  <Col className="col-md-4">
+                    <label className="form-label mt-2">State: </label>
+                    <ErrorMessage
+                      name="state"
+                      component="span"
+                      className="p-1 bg-alert-red text-alert-red rounded m-3"
+                    />
+                    <Field
+                      id="inputCreateForm"
+                      name="state"
+                      placeholder="MA"
+                      class="form-control"
+                    />
+                  </Col>
+                  <Col className="col-md-2">
+                    <label className="form-label mt-2">Zipcode: </label>
+                    <Field
+                      id="inputCreateForm"
+                      name="zipcode"
+                      placeholder="01605"
+                      class="form-control"
+                    />
+                  </Col>
+                </Row>
+              </>
+            ) : (
+              <>
+                <label className="form-label mt-2">URL Link: </label>
+                <ErrorMessage
+                  name="urlLink"
+                  component="span"
+                  className="p-1 bg-alert-red text-alert-red rounded m-3"
+                />
+                <Field
+                  id="inputCreateForm"
+                  name="urlLink"
+                  placeholder="www.yes.com"
+                  class="form-control"
+                />
+              </>
+            )}
+            <div className="form-check mt-2">
+              <label className="form-check-label">High Needs? </label>
+              <ErrorMessage name="isHighNeeds" component="span" />
+              <Field
+                id="inputCreateForm"
+                name="isHighNeeds"
+                type="checkbox"
+                className="form-check-input"
+              />
+            </div>
+    
+            <div className="d-grid mt-2">
+              <Button className="btn btn-secondary btn-lg btn-block" type="submit">
+                Finish Editing
+              </Button>
+            </div>
+          </Form>
+        </Formik>
+        )}
+        {getImageURL && <Button variant={(editForm || form.status === "completed") ? "warning mt-3 mb-3" : "warning m-3"} onClick={getImage}>
+          {closeImage ? "Close Image" : "Get Image"}
+        </Button>}
+        {getImageURL && closeImage && (
+          <img
+            className="img-fluid"
+            src={require("../assets/images/" + getImageURL)}
+            alt="img"
+          />
+        )}
+        {form.status === "approved" && <><div className="mb-3 mt-3">
+            <label className="form-label">{getImageURL ? "If the image you uploaded is NOT the correct one, please upload the correct image here. " : "If you have completed your community service, please choose a file to upload for verification."}</label>
+            <input
+            className="form-control"
           type="file"
           name="image"
           accept="image/*"
@@ -257,125 +425,10 @@ const SeeForm = () => {
             setImageName(e.target.files[0].name);
           }}
         />
-        <button className="btn" onClick={imageHandler}>
+        </div>
+        <Button variant="danger" onClick={imageHandler}>
           Submit
-        </button>
-        <button className="btn" onClick={getImage}>
-          {closeImage ? "Close Image" : "Get Image"}
-        </button>
-        {getImageURL && closeImage && (
-          <img
-            className="img-fluid"
-            src={require("../assets/images/" + getImageURL)}
-            alt="img"
-          />
-        )}
-        <button
-          className="btn"
-          onClick={() => {
-            setEditForm(!editForm);
-          }}
-        >
-          {" "}
-          {editForm ? "Close Editing" : "Edit Form"}{" "}
-        </button>
-        {editForm && (
-          <div className="add-form">
-            <Formik
-              initialValues={initialValues}
-              onSubmit={onSubmit}
-              validationSchema={validationSchema}
-            >
-              <Form className="form-control">
-                <label>Proposal Name: </label>
-                <ErrorMessage
-                  name="proposalName"
-                  component="span"
-                  className="errorMessage"
-                />
-                <Field
-                  id="inputCreateForm"
-                  name="proposalName"
-                  placeholder="Doing Your STEM Project"
-                />
-                <label>Proposal Description: </label>
-                <ErrorMessage
-                  name="proposalDescription"
-                  component="span"
-                  className="errorMessage"
-                />
-                <Field
-                  id="inputCreateForm"
-                  name="proposalDescription"
-                  placeholder="Making my STEM poster which is quite obviously high needs. "
-                />
-                <label>Business Name: </label>
-                <ErrorMessage
-                  name="businessName"
-                  component="span"
-                  className="errorMessage"
-                />
-                <Field
-                  id="inputCreateForm"
-                  name="businessName"
-                  placeholder="Mass Academy of Math and Science"
-                />
-                <div className="form-control-check">
-                  <label>Is It Online? </label>
-                  <ErrorMessage name="isOnline" component="span" />
-                  <Field
-                    id="inputCreateForm"
-                    name="isOnline"
-                    type="checkbox"
-                    onClick={() => setPhysicalAddress(!physicalAddress)}
-                  />
-                </div>
-                {physicalAddress && (
-                  <>
-                    <label>Street Address: </label>
-                    <Field
-                      id="inputCreateForm"
-                      name="streetAddress"
-                      placeholder="85 Prescott Street"
-                    />
-                    <label>City: </label>
-                    <Field
-                      id="inputCreateForm"
-                      name="city"
-                      placeholder="Worcester"
-                    />
-                    <label>State: </label>
-                    <ErrorMessage
-                      name="state"
-                      component="span"
-                      className="errorMessage"
-                    />
-                    <Field id="inputCreateForm" name="state" placeholder="MA" />
-                    <label>Zipcode: </label>
-                    <Field
-                      id="inputCreateForm"
-                      name="zipcode"
-                      placeholder="01605"
-                    />
-                  </>
-                )}
-                <div className="form-control-check">
-                  <label>High Needs? </label>
-                  <ErrorMessage name="isHighNeeds" component="span" />
-                  <Field
-                    id="inputCreateForm"
-                    name="isHighNeeds"
-                    type="checkbox"
-                  />
-                </div>
-                <button className="btn btn-block" type="submit">
-                  {" "}
-                  Submit Form{" "}
-                </button>
-              </Form>
-            </Formik>
-          </div>
-        )}
+        </Button></>}
       </div>
       <div className="form comment-container">
         <h3>Comments</h3>

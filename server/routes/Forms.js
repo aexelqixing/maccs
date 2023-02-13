@@ -115,13 +115,17 @@ router.put("/byId/:id", async (req, res) => {
 })
 
 router.put("/upload/:id", upload.single('image'), async (req, res) => {
-    if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
-        res.json({ error: "Only image files (jpg, jpeg, png) are allowed. "})
+    if (!req.file) {
+        res.json({ error: "Please upload a file. "})
     } else {
-        const image = req.file.filename;
-        const id = req.params.id;
-        await Forms.update({ image: image }, { where: { id: id } });
-        res.json("Uploaded successfully.");
+        if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+            res.json({ error: "Only image files (jpg, jpeg, png) are allowed. "})
+        } else {
+            const image = req.file.filename;
+            const id = req.params.id;
+            await Forms.update({ image: image }, { where: { id: id } });
+            res.json("Uploaded successfully.");
+        }
     }
 })
 

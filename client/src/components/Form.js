@@ -1,5 +1,6 @@
 import React from "react";
 import { FaPencilAlt, FaTrashAlt, FaCheck, FaTimes } from "react-icons/fa";
+import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
@@ -118,35 +119,35 @@ const Form = ({ form, isAdmin }) => {
               onChange={handleChange}
             />
 
-            <button
+            <Button
               className="btn btn-edit-status"
               onClick={onSubmitStatusChange}
             >
               Change Status
-            </button>
+            </Button>
           </div>
         ) : (
           <div>
             {form.status === "approved" && (
-              <button
-                className="btn"
+              <Button
+                variant="danger mb-2 mr-2"
                 onClick={() => {
                   setChangeAddHours(!changeAddHours);
                 }}
               >
                 Edit Hours
-              </button>
+              </Button>
             )}{" "}
             {isAdmin && (
-              <button
-                className="btn btn-edit-status"
+              <Button
+                variant="warning mb-2 mr-2"
                 onClick={() => {
                   setChangeStatus(!changeStatus);
                 }}
               >
                 Edit Status
-              </button>
-            )}{" "}
+              </Button>
+            )}{" "} <br/>
             <FaPencilAlt
               style={{ color: "#f48c06", cursor: "pointer" }}
               onClick={() => navigate(`/form/${form.id}`)}

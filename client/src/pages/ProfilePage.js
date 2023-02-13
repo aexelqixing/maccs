@@ -48,7 +48,7 @@ const ProfilePage = () => {
         </p>
         <p><b>Not Verified Hours:</b> {user.nonApprovedHours} | <b>Verified Hours:</b> {user.verifiedHours}</p>
       </div>
-      {authState.isAdmin && <table className="bg-light rounded table table-borderless mx-auto mt-2 mb-0">
+      {authState.isAdmin && <div className="bg-light p-3 rounded mt-4"><table className="table table-hover bg-light">
         <thead>
           <tr>
           <th>Student WPI Address</th>
@@ -69,7 +69,7 @@ const ProfilePage = () => {
           return <Form key={key} isAdmin={authState.isAdmin} form={form} />;
         })}
         </tbody>
-      </table>}
+      </table></div>}
     </>
   );
 };

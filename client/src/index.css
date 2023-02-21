@@ -19,6 +19,26 @@
   color: black;
 }
 
+.rejected {
+  background-color: #f7d7da;
+  color: #6f1c22;
+}
+
+.completed {
+  background-color: #d4edda;
+  color: #125623;
+}
+
+.requested {
+  background-color: #fff3cd;
+  color: #856403;
+}
+
+.approved {
+  background-color: #d1edf1;
+  color: #0e535b;
+}
+
 /*
 .container {
   max-width: 1000px;

@@ -28,7 +28,7 @@ const Form = ({ form, isAdmin }) => {
   const Dropdown = ({ value, options, onChange }) => {
     return (
       <label>
-        <select value={value} onChange={onChange}>
+        <select className="form-select mb-1" value={value} onChange={onChange}>
           {options.map((option, index) => (
             <option key={index} value={option.value}>
               {option.label}
@@ -86,17 +86,17 @@ const Form = ({ form, isAdmin }) => {
       <td>{isAdmin ? <Link to={`/profile/${form.UserId}`}>{form.student}</Link> : form.student}</td>
       <td>{form.proposalName}</td>
       <td>
-        <span className={`status-all ${form.status}`}>
-          {form.status === "rejected" ? "not-approved" : form.status}
-        </span>
+        <div className={`p-1 rounded text-center ${form.status}`}>
+        {form.status === "rejected" ? "not approved" : form.status}
+        </div>
       </td>
       <td className="text-center">{form.wasApproved ? <FaCheck /> : <FaTimes />}</td>
       <td className="text-center">{form.wasVerified ? <FaCheck /> : <FaTimes />}</td>
       <td>
         {changeAddHours ? (
           <div className="add-form form-control">
-            <input type="number" onChange={(event) => {setAddFormHours(event.target.value)}}/>
-            <button className="btn btn-block" onClick={addHours}>Add Hours</button>
+            <input type="number" className="form-control" onChange={(event) => {setAddFormHours(event.target.value)}}/>
+            <Button variant="secondary mt-2 mr-2" onClick={addHours}>Add Hours</Button>
           </div>
         ) : (
           form.nonApprovedHours
@@ -120,7 +120,7 @@ const Form = ({ form, isAdmin }) => {
             />
 
             <Button
-              className="btn btn-edit-status"
+              variant="secondary mb-2 mr-2"
               onClick={onSubmitStatusChange}
             >
               Change Status

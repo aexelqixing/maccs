@@ -174,7 +174,9 @@ const SeeForm = () => {
   return (
     <>
       <div className="bg-light p-4 w-75 mx-auto rounded">
-        <h1 className="m-0 p-0">{form.proposalName} <span className="badge bg-secondary m-0 pb-1 pt-1">{form.status}</span></h1>
+        <h1 className="m-0 p-0">{form.proposalName} <span className={`p-1 rounded text-center ${form.status}`}>
+        {form.status === "rejected" ? "not approved" : form.status}
+        </span></h1>
         <div className="bg-isabelline p-4 mt-3 rounded">
           <table className="table table-borderless w-auto mb-0">
             <tbody>
@@ -199,7 +201,7 @@ const SeeForm = () => {
                 </th>
                 <td>
                   {form.updatedAt ? form.updatedAt.substring(0, 10) : "..."}{" "}
-                  {form.updatedAt ? form.createdAt.substring(11, 19) : ""}
+                  {form.updatedAt ? form.updatedAt.substring(11, 19) : ""}
                 </td>
               </tr>
               <tr>
@@ -219,7 +221,7 @@ const SeeForm = () => {
                   Location
                 </th>
                 <td>{form.isOnline
-              ? "Online"
+              ? form.urlLink
               : form.streetAddress +
                 ", " +
                 form.city +
@@ -430,12 +432,14 @@ const SeeForm = () => {
           Submit
         </Button></>}
       </div>
-      <div className="form comment-container">
+
+
+      <div className="bg-light p-4 w-75 mt-3 mx-auto rounded">
         <h3>Comments</h3>
-        <div className="listOfComments">
+        <div className="bg-isabelline mt-3 mb-3 rounded">
           {comments.map((comment, key) => {
             return (
-              <div key={key} className={comment.isAdmin ? "admin" : "comment"}>
+              <div key={key} className={`${comment.isAdmin ? "bg-grey" : ""} p-3 m-0 rounded`}>
                 <h3>
                   {comment.commentBody}{" "}
                   {authState.username === comment.username && (
@@ -448,7 +452,7 @@ const SeeForm = () => {
                   )}
                 </h3>
                 <p>
-                  <span className="form form-creator">{comment.username}</span>{" "}
+                  <span className="bg-black p-2 rounded text-white">{comment.username}</span>{" "}
                   Sent on{" "}
                   {comment.createdAt
                     ? comment.createdAt.substring(0, 10)
@@ -459,8 +463,11 @@ const SeeForm = () => {
             );
           })}
         </div>
-        <div className="add-form form-control">
-          <input
+
+        <div>
+          <textarea
+            className="form-control"
+            rows="3"
             type="text"
             value={newComment}
             placeholder="Comment..."
@@ -468,9 +475,9 @@ const SeeForm = () => {
               setNewComment(event.target.value);
             }}
           />
-          <button className="btn" onClick={addComment}>
+          <Button variant="secondary mb-2 mr-2 mt-2" onClick={addComment}>
             Add Comment
-          </button>
+          </Button>
         </div>
       </div>
     </>

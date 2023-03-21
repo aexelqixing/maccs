@@ -11,6 +11,7 @@ const Home = () => {
   const [listOfForms, setListOfForms] = useState([]);
   const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
+  const data = [];
 
   useEffect(() => {
     axios
@@ -60,8 +61,11 @@ const Home = () => {
           </thead>
           <tbody>
             {listOfForms.map((form, key) => {
+              {console.log(form.verifiedHours, form.nonApprovedHours)}
+              {data.concat({ name: form.student, verifiedHours: form.verifiedHours })}
               return <Form key={key} isAdmin={authState.isAdmin} form={form} />;
             })}
+            {console.log(data)}
           </tbody>
         </table>
       </div>

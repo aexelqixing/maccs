@@ -22,10 +22,12 @@ const SeeUsers = () => {
       .then((response) => {
         if (response.data.error) {
           navigate(`/`);
-          alert(response.data.error);
+          alert(response.data.error, response.data);
+          console.log(response.data);
           return;
         }
         setListOfUsers(response.data);
+        // console.log(response.data);
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

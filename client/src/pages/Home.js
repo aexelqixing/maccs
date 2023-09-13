@@ -26,6 +26,7 @@ const Home = () => {
           // alert(response.data.error);
           return;
         }
+        console.log(localStorage.getItem("accessToken"))
         setListOfForms(response.data);
         console.log(listOfForms);
       });
@@ -63,7 +64,7 @@ const Home = () => {
             {listOfForms.map((form, key) => {
               {console.log(form.verifiedHours, form.nonApprovedHours)}
               {data.concat({ name: form.student, verifiedHours: form.verifiedHours })}
-              return <Form key={key} isAdmin={authState.isAdmin} form={form} />;
+              return <Form key={key} isAdmin={authState.isAdmin} form={form} mode="table"/>;
             })}
             {console.log(data)}
           </tbody>

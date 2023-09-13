@@ -44,7 +44,11 @@ const SeeForm = () => {
         if (!getImageURL) setCloseImage(true);
       });
 
-    axios.get(`${PORT}/comments/${id}`).then((response) => {
+    axios.get(`${PORT}/comments/${id}`, {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
       setComments(response.data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,7 +1,6 @@
 # MAMS Community Service Portal
 
-This project is for the MAMS Community Service Portal, an independent software project made by [Omar El Nesr](https://users.wpi.edu/~onesr), who 
-deployed the application, and [Rianna Santra](https://users.wpi.edu/~rsantra), who created it. 
+This project is for the MAMS Community Service Portal, an independent software project made by [Omar El Nesr](https://users.wpi.edu/~onesr) and [Rianna Santra](https://users.wpi.edu/~rsantra). 
 
 ## Client Side
 
